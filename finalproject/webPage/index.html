@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <script src="test.js"></script>
+    <title>Document</title>
+  </head>
+  <body onload="page_on_load()" style="margin: 0">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <div class="login-container">
+      <div class="login-icon-box">
+        <button onclick="login()" class="login-button">
+          <picture>
+            <img src="login-icon.png" alt="login-icon" class="login-icon-img" />
+          </picture>
+        </button>
+      </div>
+    </div>
+    <div class="homePage-container">
+      <div class="title-box">
+        <h1>Welcome to Watch Together</h1>
+        <h2>Please log in to continue</h2>
+      </div>
+    </div>
+    <button onclick="navigateVideoPage()">navigate Video page</button>
+    <div id="video-container"></div>
+    <div id="message"></div>
+  </body>
+</html>

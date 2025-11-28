@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="videoPage.css" />
+    <script src="test.js"></script>
+    <title>Document</title>
+  </head>
+  <body onload="page_on_load()" style="margin: 0; overflow: hidden">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <div id="video-container">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Search videos..."
+        />
+        <button class="search-button" onclick="searchVideos()">Search</button>
+      </div>
+      <div class="video-box" id="video1">
+        <div class="video-item">
+          <picture class="video-preview-picture">
+            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
+          </picture>
+          <div class="video-info">
+            <div class="video-title">
+              <p class="video-title-text">title</p>
+            </div>
+            <div class="video-discription">
+              <p class="video-discription-text">discription</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video-box" id="video2">
+        <div class="video-item">
+          <picture class="video-preview-picture">
+            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
+          </picture>
+          <div class="video-info">
+            <div class="video-title">
+              <p class="video-title-text">title</p>
+            </div>
+            <div class="video-discription">
+              <p class="video-discription-text">discription</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video-box" id="video3">
+        <div class="video-item">
+          <picture class="video-preview-picture">
+            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
+          </picture>
+          <div class="video-info">
+            <div class="video-title">
+              <p class="video-title-text">title</p>
+            </div>
+            <div class="video-discription">
+              <p class="video-discription-text">discription</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video-box" id="video4">
+        <div class="video-item">
+          <picture class="video-preview-picture">
+            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
+          </picture>
+          <div class="video-info">
+            <div class="video-title">
+              <p class="video-title-text">title</p>
+            </div>
+            <div class="video-discription">
+              <p class="video-discription-text">discription</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video-box" id="video5">
+        <div class="video-item">
+          <picture class="video-preview-picture">
+            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
+          </picture>
+          <div class="video-info">
+            <div class="video-title">
+              <p class="video-title-text">title</p>
+            </div>
+            <div class="video-discription">
+              <p class="video-discription-text">discription</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="message"></div>
+  </body>
+</html>
