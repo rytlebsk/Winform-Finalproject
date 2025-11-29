@@ -23,6 +23,14 @@ function page_on_load() {
     document.getElementById("message").innerHTML =
       "<h1>Enter the ID to play a video.</h1>";
   }
+
+  // Initially hide menus
+  document.getElementById("login-menu").style.visibility = "hidden";
+  document.getElementById("register-menu").style.visibility = "hidden";
+  document.getElementById("member-action-page-container").style.visibility =
+    "hidden";
+  document.getElementById("member-invite-page-container").style.visibility =
+    "hidden";
 }
 
 function playerControl(action) {
@@ -46,4 +54,64 @@ function playerControl(action) {
 
 function navigateVideoPage() {
   window.location.href = `videoPage.html`;
+}
+
+function openLoginMenu() {
+  document.getElementById("login-menu").style.visibility = "visible";
+}
+
+function closeLoginMenu() {
+  document.getElementById("login-menu").style.visibility = "hidden";
+}
+
+function openRegisterPage() {
+  var loginMenuOpened =
+    document.getElementById("login-menu").style.visibility === "visible";
+  if (loginMenuOpened) {
+    closeLoginMenu();
+  }
+  document.getElementById("register-menu").style.visibility = "visible";
+}
+
+function closeRegisterMenu() {
+  document.getElementById("register-menu").style.visibility = "hidden";
+}
+
+function openMemberInfoPage() {
+  var memberActionPageOpened =
+    document.getElementById("member-action-page-container").style.display ===
+    "flex";
+  var invitePageOpened =
+    document.getElementById("member-invite-page-container").style.display ===
+    "flex";
+  if (memberActionPageOpened) {
+    document.getElementById("member-action-page-container").style.display =
+      "none";
+    return;
+  }
+  if (invitePageOpened) {
+    document.getElementById("member-invite-page-container").style.display =
+      "none";
+  }
+  document.getElementById("member-action-page-container").style.display =
+    "flex";
+}
+function openInvitePage() {
+  var invitePageOpened =
+    document.getElementById("member-invite-page-container").style.display ===
+    "flex";
+  var memberActionPageOpened =
+    document.getElementById("member-action-page-container").style.display ===
+    "flex";
+  if (invitePageOpened) {
+    document.getElementById("member-invite-page-container").style.display =
+      "none";
+    return;
+  }
+  if (memberActionPageOpened) {
+    document.getElementById("member-action-page-container").style.display =
+      "none";
+  }
+  document.getElementById("member-invite-page-container").style.display =
+    "flex";
 }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="memberPage.css" />
+    <script src="test.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>Member Page</title>
+  </head>
+  <body onload="page_on_load()" style="margin: 0">
+    <div class="memberPage-container">
+      <div class="memberPage-navbar">
+        <h2 class="memberPage-title">Welcome back! XXX</h2>
+        <button class="member-info-button" onclick="openInvitePage()">
+          <picture>
+            <img
+              src="invite-icon.png"
+              alt="invite-icon"
+              class="invite-icon-img"
+            />
+          </picture>
+        </button>
+        <button class="member-info-button" onclick="openMemberInfoPage()">
+          <picture>
+            <img
+              src="member-icon.png"
+              alt="member-icon"
+              class="member-icon-img"
+            />
+          </picture>
+        </button>
+      </div>
+      <div
+        class="member-action-page-container"
+        id="member-action-page-container"
+      >
+        <div class="member-action-page-box">
+          <h3 class="member-action-page-title">Name</h3>
+          <div class="logout-button-container">
+            <button class="member-action-page-button">Log Out</button>
+          </div>
+          <div class="member-action-page-content"></div>
+        </div>
+      </div>
+      <div
+        class="member-invite-page-container"
+        id="member-invite-page-container"
+      >
+        <div class="member-invite-page-box">
+          <h3 class="member-invite-page-title">Invitation</h3>
+          <div class="source-member-info-container">
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+            <div class="source-member-info-box">
+              <p class="source-member-name">XXX invited you to join the room</p>
+              <p class="source-member-room-id">Room ID: XXXXX</p>
+              <div class="invite-response-button-group">
+                <button class="invite-accept-button">Accept</button>
+                <button class="invite-decline-button">Decline</button>
+              </div>
+            </div>
+          </div>
+          <div class="member-invite-page-content"></div>
+        </div>
+      </div>
+      <div class="member-room-action-container">
+        <div class="create-room-container">
+          <div class="create-room-box">
+            <h3 class="create-room-title">Create a Room</h3>
+            <div class="create-room-input-group">
+              <label for="room-name">Room Name:</label>
+              <input
+                type="text"
+                id="room-name"
+                name="room-name"
+                class="create-room-input"
+              />
+              <label for="room-password">Password:</label>
+              <input
+                type="password"
+                id="room-password"
+                name="room-password"
+                class="create-room-input"
+              />
+            </div>
+            <div class="create-room-button-group">
+              <button class="create-room-button" onclick="createRoom()">
+                Create Room
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="join-room-container">
+          <div class="join-room-box">
+            <h3 class="join-room-title">Join a Room</h3>
+            <div class="join-room-input-group">
+              <label for="join-room-id">Room ID:</label>
+              <input
+                type="text"
+                id="join-room-id"
+                name="join-room-id"
+                class="join-room-input"
+              />
+              <label for="join-room-password">Password:</label>
+              <input
+                type="password"
+                id="join-room-password"
+                name="join-room-password"
+                class="join-room-input"
+              />
+            </div>
+            <div class="join-room-button-group">
+              <button onclick="joinRoom()">Join Room</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
