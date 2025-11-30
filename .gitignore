@@ -1,0 +1,31 @@
+# Rust / Cargo
+*/target/
+**/*.rs.bk
+**/*.rmeta
+**/*.rlib
+
+# Cargo credentials (if you use private registries)
+.cargo/credentials
+
+# By default Cargo.lock is committed for applications.
+# Uncomment the next line if you want to ignore Cargo.lock (e.g. for libraries)
+# Cargo.lock
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.sw?
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# For db
+*/db_data/
