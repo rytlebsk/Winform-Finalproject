@@ -63,19 +63,8 @@ html {
   min-width: 0; /* allow it to shrink and avoid overflow in flex layout */
 }
 
-@media (max-width: 640px) {
-  .video-item-box {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .video-preview-picture {
-    flex: 0 0 auto;
-    width: 100%;
-    aspect-ratio: 16/9;
-  }
-}
-
 .video-title {
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: bold;
+  overflow-wrap: break-word;
 }

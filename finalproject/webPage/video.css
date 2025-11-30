@@ -1,0 +1,21 @@
+body,
+html {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+  background-color: gray;
+}
+
+.video-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.video-item {
+  flex: 1;
+  display: flex;
+}

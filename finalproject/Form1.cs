@@ -25,6 +25,8 @@ namespace finalproject
         {
             HttpListener listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8080/");
+            listener.Prefixes.Add("http://localhost:8000/");
+            listener.Prefixes.Add("http://localhost:8964/");
             listener.Start();
 
             var content = new FileStream("videoQueue.html", FileMode.Open, FileAccess.Read);
@@ -36,10 +38,15 @@ namespace finalproject
                     var request = context.Request;
                     var response = context.Response;
 
-                    // 取得請求的檔案名稱
+                    string defaultFile = "videoQueue.html";
+                    if (request.LocalEndPoint.Port == 8000)
+                        defaultFile = "memberList.html";
+                    if (request.LocalEndPoint.Port == 8964)
+                        defaultFile = "video.html";
+
                     string filename = request.Url.AbsolutePath.TrimStart('/');
                     if (string.IsNullOrEmpty(filename))
-                        filename = "videoQueue.html"; // 預設頁面
+                        filename = defaultFile;
 
                     // 檔案完整路徑
                     string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
@@ -72,7 +79,9 @@ namespace finalproject
 
             try
             {
-                webView21.Source = new Uri("http://localhost:8080/");
+                webView21.Source = new Uri("http://localhost:8964/");
+                webView22.Source = new Uri("http://localhost:8080/");
+                webView23.Source = new Uri("http://localhost:8000/");
             }
             catch (Exception ex)
             {
@@ -82,6 +91,7 @@ namespace finalproject
 
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
             string id = videolist.Items[0].ToString();
 
             if (id != videoId)
@@ -103,6 +113,7 @@ namespace finalproject
             {
                 webView21.ExecuteScriptAsync("playerControl('play')");
             }
+            */
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -112,6 +123,7 @@ namespace finalproject
 
         private void button3_Click(object sender, EventArgs e)
         {
+            /*
             videolist.Items.RemoveAt(0);
             string id = videolist.Items[0].ToString();
 
@@ -134,6 +146,7 @@ namespace finalproject
             {
                 webView21.ExecuteScriptAsync("playerControl('play')");
             }
+            */
         }
 
         private void webView21_Click(object sender, EventArgs e)
@@ -153,6 +166,7 @@ namespace finalproject
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
+            /*
             if (e.KeyCode == Keys.Enter)
             {
                 if (!string.IsNullOrWhiteSpace(textBox1.Text))
@@ -161,6 +175,7 @@ namespace finalproject
                     textBox1.Clear();
                 }
             }
+            */
         }
     }
 }
