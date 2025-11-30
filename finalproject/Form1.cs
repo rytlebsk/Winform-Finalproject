@@ -82,7 +82,7 @@ namespace finalproject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string id = textBox1.Text;
+            string id = videolist.Items[0].ToString();
 
             if (id != videoId)
             {
@@ -112,7 +112,55 @@ namespace finalproject
 
         private void button3_Click(object sender, EventArgs e)
         {
+            videolist.Items.RemoveAt(0);
+            string id = videolist.Items[0].ToString();
 
+            if (id != videoId)
+            {
+                if (id.Length != 0)
+                {
+                    try
+                    {
+                        webView21.Source = new Uri("http://localhost:8080/?videoId=" + id);
+                        videoId = id;
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error");
+                    }
+                }
+            }
+            else
+            {
+                webView21.ExecuteScriptAsync("playerControl('play')");
+            }
+        }
+
+        private void webView21_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox1.Text))
+                {
+                    videolist.Items.Add(textBox1.Text);
+                    textBox1.Clear();
+                }
+            }
         }
     }
 }
