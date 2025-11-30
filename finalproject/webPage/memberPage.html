@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="memberPage.css" />
-    <script src="test.js"></script>
+    <script src="memberPage.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <title>Member Page</title>
   </head>
@@ -37,10 +37,103 @@
       >
         <div class="member-action-page-box">
           <h3 class="member-action-page-title">Name</h3>
-          <div class="logout-button-container">
-            <button class="member-action-page-button">Log Out</button>
+          <p class="member-action-page-id">ID: XXXXX</p>
+          <div class="member-friend-container">
+            <h3 id="friend-management-title">Friends List</h3>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 1</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 2</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 3</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 4</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 5</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 6</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 7</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 8</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 9</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
+            <div class="member-friend-box-container">
+              <div class="member-friend-box">
+                <p class="member-friend-name">Friend 10</p>
+                <div class="member-friend-button-container">
+                  <button class="member-friend-remove-button">Remove</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="member-action-page-content"></div>
+          <div class="add-friend-button-container">
+            <button
+              class="member-action-page-button"
+              onclick="openAddFriendMenu()"
+            >
+              Add Friend
+            </button>
+          </div>
+          <div class="logout-button-container">
+            <button class="member-action-page-button" onclick="logout()">
+              Log Out
+            </button>
+          </div>
         </div>
       </div>
       <div
@@ -110,6 +203,36 @@
           <div class="member-invite-page-content"></div>
         </div>
       </div>
+      <div class="add-friend-menu-container" id="add-friend-menu">
+        <div class="add-friend-menu-box" id="add-friend-menu-box-id">
+          <div class="add-friend-menu-title-container">
+            <h3 id="add-friend-menu-title">Add a Friend</h3>
+          </div>
+          <div class="add-friend-input-group">
+            <label for="friend-username">Friend's ID:</label>
+            <input
+              type="text"
+              id="friend-username"
+              name="friend-username"
+              class="add-friend-input"
+            />
+          </div>
+          <div
+            class="add-friend-menu-button-group"
+            id="add-friend-menu-button-group"
+          >
+            <button onclick="submitAddFriend()" class="add-friend-menu-button">
+              Submit
+            </button>
+            <button
+              onclick="closeAddFriendMenu()"
+              class="add-friend-menu-button"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="member-room-action-container">
         <div class="create-room-container">
           <div class="create-room-box">
@@ -157,7 +280,9 @@
               />
             </div>
             <div class="join-room-button-group">
-              <button onclick="joinRoom()">Join Room</button>
+              <button class="join-room-button" onclick="joinRoom()">
+                Join Room
+              </button>
             </div>
           </div>
         </div>
