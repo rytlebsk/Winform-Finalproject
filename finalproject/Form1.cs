@@ -27,16 +27,45 @@ namespace finalproject
             listener.Prefixes.Add("http://localhost:8080/");
             listener.Start();
 
-            var content = new FileStream("test.html", FileMode.Open, FileAccess.Read);
+            var content = new FileStream("videoQueue.html", FileMode.Open, FileAccess.Read);
             Task.Run(() =>
             {
                 while (true)
                 {
                     var context = listener.GetContext();
+                    var request = context.Request;
                     var response = context.Response;
-                    response.ContentLength64 = content.Length;
-                    content.Position = 0;
-                    content.CopyTo(response.OutputStream);
+
+                    // 取得請求的檔案名稱
+                    string filename = request.Url.AbsolutePath.TrimStart('/');
+                    if (string.IsNullOrEmpty(filename))
+                        filename = "videoQueue.html"; // 預設頁面
+
+                    // 檔案完整路徑
+                    string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
+
+                    if (File.Exists(filePath))
+                    {
+                        // 設定Content-Type
+                        if (filename.EndsWith(".css"))
+                            response.ContentType = "text/css";
+                        else if (filename.EndsWith(".js"))
+                            response.ContentType = "application/javascript";
+                        else if (filename.EndsWith(".html"))
+                            response.ContentType = "text/html";
+                        else
+                            response.ContentType = "application/octet-stream";
+
+                        using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                        {
+                            response.ContentLength64 = fs.Length;
+                            fs.CopyTo(response.OutputStream);
+                        }
+                    }
+                    else
+                    {
+                        response.StatusCode = 404;
+                    }
                     response.OutputStream.Close();
                 }
             });

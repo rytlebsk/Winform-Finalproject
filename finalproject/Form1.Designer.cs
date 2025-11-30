@@ -42,34 +42,33 @@
             this.webView21.AllowExternalDrop = true;
             this.webView21.CreationProperties = null;
             this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView21.Enabled = false;
-            this.webView21.Location = new System.Drawing.Point(200, 150);
+            this.webView21.Location = new System.Drawing.Point(876, 107);
             this.webView21.Name = "webView21";
-            this.webView21.Size = new System.Drawing.Size(800, 450);
+            this.webView21.Size = new System.Drawing.Size(292, 488);
             this.webView21.TabIndex = 0;
             this.webView21.ZoomFactor = 1D;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(471, 96);
+            this.textBox1.Location = new System.Drawing.Point(471, 104);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(259, 22);
+            this.textBox1.Size = new System.Drawing.Size(259, 20);
             this.textBox1.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(434, 99);
+            this.label1.Location = new System.Drawing.Point(434, 107);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 12);
+            this.label1.Size = new System.Drawing.Size(21, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "ID:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(266, 632);
+            this.button1.Location = new System.Drawing.Point(266, 685);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(162, 85);
+            this.button1.Size = new System.Drawing.Size(162, 92);
             this.button1.TabIndex = 3;
             this.button1.Text = "play";
             this.button1.UseVisualStyleBackColor = true;
@@ -77,9 +76,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(513, 632);
+            this.button2.Location = new System.Drawing.Point(513, 685);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(162, 85);
+            this.button2.Size = new System.Drawing.Size(162, 92);
             this.button2.TabIndex = 4;
             this.button2.Text = "pause";
             this.button2.UseVisualStyleBackColor = true;
@@ -87,9 +86,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(752, 632);
+            this.button3.Location = new System.Drawing.Point(752, 685);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(162, 85);
+            this.button3.Size = new System.Drawing.Size(162, 92);
             this.button3.TabIndex = 5;
             this.button3.Text = "next";
             this.button3.UseVisualStyleBackColor = true;
@@ -97,9 +96,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 761);
+            this.ClientSize = new System.Drawing.Size(1218, 793);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
