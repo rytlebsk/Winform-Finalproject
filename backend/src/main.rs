@@ -18,20 +18,25 @@ use uuid::Uuid;
 type ConnectionPool = Pool<PostgresConnectionManager<tokio_postgres::NoTls>>;
 
 #[derive(Clone)]
-struct AppState {
+struct DatabaseConnectionState {
     pool: Arc<ConnectionPool>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct loginRequestPayload {
+struct LoginRequestPayload {
     id: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct loginResponsePayload {
+struct LoginResponsePayload {
     id: String,
     room_id: String,
     msg: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct LogoutRequestPayload {
+    id: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -63,7 +68,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/health", get(|| async { "OK" })) //render health check endpoint
         //login when open
         .route("/login", post(login))
-        .with_state(AppState {
+        .with_state(DatabaseConnectionState {
             pool: Arc::new(pool.clone()),
         })
         //logout when close
@@ -78,15 +83,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         });
 
     let listener = TcpListener::bind("0.0.0.0:80").await.unwrap();
-
     axum::serve(listener, app).await.unwrap();
     Ok(())
 }
 
 //login when open
 async fn login(
-    State(state): State<AppState>,
-    extract::Json(payload): extract::Json<loginRequestPayload>,
+    State(state): State<DatabaseConnectionState>,
+    extract::Json(payload): extract::Json<LoginRequestPayload>,
 ) -> impl IntoResponse {
     //search database by id
     let mut id: String = payload.id;
@@ -106,7 +110,7 @@ async fn login(
             };
 
             /* register */
-            if (id.is_empty() || !user_exists) {
+            if id.is_empty() || !user_exists {
                 //create new user
                 let user = User {
                     id: Uuid::new_v4(),
@@ -138,7 +142,7 @@ async fn login(
                 {
                     Err(e) => return (
                         StatusCode::INTERNAL_SERVER_ERROR,
-                        Json(loginResponsePayload {
+                        Json(LoginResponsePayload {
                             id: id.clone(),
                             room_id: String::new(),
                             msg: format!("Database insertion failed: {}", e),
@@ -166,7 +170,7 @@ async fn login(
                 Err(e) => {
                     return (
                         StatusCode::INTERNAL_SERVER_ERROR,
-                        Json(loginResponsePayload {
+                        Json(LoginResponsePayload {
                             id: id.clone(),
                             room_id: String::new(),
                             msg: format!("Database update failed: {}", e),
@@ -180,7 +184,7 @@ async fn login(
 
             return (
                 StatusCode::OK,
-                Json(loginResponsePayload {
+                Json(LoginResponsePayload {
                     id: id.clone(),
                     room_id: room_id.to_string(),
                     msg: "User logged in successfully".to_string(),
@@ -190,7 +194,7 @@ async fn login(
         Err(_) => {
             return (
                 StatusCode::INTERNAL_SERVER_ERROR,
-                Json(loginResponsePayload {
+                Json(LoginResponsePayload {
                     id: id.clone(),
                     room_id: String::new(),
                     msg: "Failed to get database connection".to_string(),
@@ -201,8 +205,8 @@ async fn login(
 }
 
 async fn logout(
-    State(state): State<AppState>,
-    extract::Json(payload): extract::Json<loginResponsePayload>,
+    State(state): State<DatabaseConnectionState>,
+    extract::Json(payload): extract::Json<LogoutRequestPayload>,
 ) -> impl IntoResponse {
     let id: String = payload.id;
     let uuid_id = Uuid::parse_str(&id).unwrap_or(Uuid::nil());
