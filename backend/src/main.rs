@@ -23,8 +23,15 @@ struct AppState {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct loginPayload {
+struct loginRequestPayload {
     id: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct loginResponsePayload {
+    id: String,
+    room_id: String,
+    msg: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -54,14 +61,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = Router::new()
         .route("/", get(|| async { "Hello, World!" }))
         .route("/health", get(|| async { "OK" })) //render health check endpoint
+        //login when open
         .route("/login", post(login))
         .with_state(AppState {
             pool: Arc::new(pool.clone()),
         })
+        //logout when close
         .route("/logout", post(logout))
         .with_state(AppState {
             pool: Arc::new(pool.clone()),
         })
+        //insert test data
         .route("/insert_test", get(insert_test))
         .with_state(AppState {
             pool: Arc::new(pool.clone()),
@@ -76,125 +86,123 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 //login when open
 async fn login(
     State(state): State<AppState>,
-    extract::Json(payload): extract::Json<loginPayload>,
+    extract::Json(payload): extract::Json<loginRequestPayload>,
 ) -> impl IntoResponse {
     //search database by id
-    let id: String = payload.id;
+    let mut id: String = payload.id;
     let uuid_id = Uuid::parse_str(&id).unwrap_or(Uuid::nil());
-    let user_exists = match state.pool.get().await {
+
+    match state.pool.get().await {
         Ok(client) => {
-            match client
+            let user_exists = match client
                 .query_one(
                     "SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)",
                     &[&uuid_id],
                 )
                 .await
             {
-                Ok(row) => row.get::<_, bool>(0), // get::<_, bool>(0) gets the first column as bool
                 Err(_) => false,
-            }
-        }
-        Err(_) => false,
-    };
+                Ok(_) => true,
+            };
 
-    if (id.is_empty() || !user_exists) {
-        //create new user
-        let user = User {
-            id: Uuid::new_v4(),
-            username: "new_user".to_string(),
-            avatar_url: "http://example.com/avatar.png".to_string(),
-            last_login: Utc::now(),
-            created_at: Utc::now(),
-            friends: vec![],
-            status: Uuid::new_v4(),
-            online: true,
-        };
-        let client = match state.pool.get().await {
-            Ok(client) => client,
-            Err(_) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(json!({"id": "None", "msg": "Failed to get database connection"})),
-                );
+            /* register */
+            if (id.is_empty() || !user_exists) {
+                //create new user
+                let user = User {
+                    id: Uuid::new_v4(),
+                    username: "new_user".to_string(),
+                    avatar_url: "http://example.com/avatar.png".to_string(),
+                    last_login: Utc::now(),
+                    created_at: Utc::now(),
+                    friends: vec![],
+                    status: Uuid::new_v4(),
+                    online: false,
+                };
+
+                //insert new user into database
+                match client
+                    .execute(
+                        "INSERT INTO users (id, name, avatar_url, last_login, created_at, friends, status, online) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+                        &[
+                            &user.id,
+                            &user.username,
+                            &user.avatar_url,
+                            &user.last_login,
+                            &user.created_at,
+                            &user.friends,
+                            &user.status,
+                            &user.online,
+                        ],
+                    )
+                    .await
+                {
+                    Err(e) => return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(loginResponsePayload {
+                            id: id.clone(),
+                            room_id: String::new(),
+                            msg: format!("Database insertion failed: {}", e),
+                        }),
+                    ),
+                    Ok(_) => (
+                        id = user.id.to_string(),
+                    ),
+                };
             }
-        };
-        return match client
-            .execute(
-                "INSERT INTO users (id, name, avatar_url, last_login, created_at, friends, status, online) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-                &[
-                    &user.id,
-                    &user.username,
-                    &user.avatar_url,
-                    &user.last_login,
-                    &user.created_at,
-                    &user.friends,
-                    &user.status,
-                    &user.online,
-                ],
-            )
-            .await
-        {
-            Err(e) => return (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(json!({"id": "None", "msg": format!("Database insertion failed: {}", e)})),
-            ),
-            Ok(_) => (
+
+            /* login */
+
+            //generate room id (for simplicity, use a fixed room id here)
+            let room_id = Uuid::new_v4();
+
+            //update last login time & tag as online
+            match client
+                .execute(
+                    "UPDATE users SET last_login = $1, online = TRUE, status = $2 WHERE id = $3",
+                    &[&Utc::now(), &room_id, &uuid_id],
+                )
+                .await
+            {
+                Err(e) => {
+                    return (
+                        StatusCode::INTERNAL_SERVER_ERROR,
+                        Json(loginResponsePayload {
+                            id: id.clone(),
+                            room_id: String::new(),
+                            msg: format!("Database update failed: {}", e),
+                        }),
+                    );
+                }
+                Ok(_) => {
+                    ("User login time updated and tagged as online successfully").into_response()
+                }
+            };
+
+            return (
                 StatusCode::OK,
-                Json(json!({"id": user.id, "msg": "New user created successfully"})),
-            ),
-        };
-    } else {
-        //update last login time
-        let client = match state.pool.get().await {
-            Ok(client) => client,
-            Err(_) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(json!({"id": "None", "msg": "Failed to get database connection"})),
-                );
-            }
-        };
-
-        match client
-            .execute(
-                "UPDATE users SET last_login = $1 WHERE id = $2",
-                &[&Utc::now(), &uuid_id],
-            )
-            .await
-        {
-            Err(e) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(json!({"id": id, "msg": format!("Database update failed: {}", e)})),
-                );
-            }
-            Ok(_) => ("User login time updated successfully").into_response(),
-        };
-
-        //tag user as online
-        match client
-            .execute("UPDATE users SET online = TRUE WHERE id = $1", &[&uuid_id])
-            .await
-        {
-            Err(e) => {
-                return (
-                    StatusCode::INTERNAL_SERVER_ERROR,
-                    Json(json!({"id": id, "msg": format!("Database update failed: {}", e)})),
-                );
-            }
-            Ok(_) => ("User tagged as online successfully").into_response(),
-        };
-
-        return (
-            StatusCode::OK,
-            Json(json!({"id": id, "msg": "User login successful"})),
-        );
-    }
+                Json(loginResponsePayload {
+                    id: id.clone(),
+                    room_id: room_id.to_string(),
+                    msg: "User logged in successfully".to_string(),
+                }),
+            );
+        }
+        Err(_) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(loginResponsePayload {
+                    id: id.clone(),
+                    room_id: String::new(),
+                    msg: "Failed to get database connection".to_string(),
+                }),
+            );
+        }
+    };
 }
 
 async fn logout(
     State(state): State<AppState>,
-    extract::Json(payload): extract::Json<loginPayload>,
+    extract::Json(payload): extract::Json<loginResponsePayload>,
 ) -> impl IntoResponse {
     let id: String = payload.id;
     let uuid_id = Uuid::parse_str(&id).unwrap_or(Uuid::nil());
