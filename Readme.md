@@ -7,6 +7,12 @@ cd backend
 cargo run
 ```
 
+If you need a clean database, you can run:
+
+```bash
+cargo run -- clear
+```
+
 # Active Database
 
 First, install PostgreSQL if you haven't already.
