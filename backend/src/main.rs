@@ -73,12 +73,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         })
         //logout when close
         .route("/logout", post(logout))
-        .with_state(AppState {
-            pool: Arc::new(pool.clone()),
-        })
-        //insert test data
-        .route("/insert_test", get(insert_test))
-        .with_state(AppState {
+        .with_state(DatabaseConnectionState {
             pool: Arc::new(pool.clone()),
         });
 
@@ -256,57 +251,4 @@ async fn run_init(pool: ConnectionPool) {
         )
         .await
         .unwrap();
-}
-
-async fn insert_test(State(state): State<AppState>) -> impl IntoResponse {
-    //insert test data into database
-    let client = match state.pool.get().await {
-        Ok(client) => client,
-        Err(_) => return Err("Failed to get database connection".into()),
-    };
-
-    let user = User {
-        id: Uuid::new_v4(),
-        username: "test_user".to_string(),
-        avatar_url: "http://example.com/avatar.png".to_string(),
-        last_login: Utc::now(),
-        created_at: Utc::now(),
-        friends: vec![],
-        status: Uuid::new_v4(),
-        online: true,
-    };
-
-    match client
-        .execute(
-            "INSERT INTO users (id, name, avatar_url, last_login, created_at, friends, status, online) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-            &[
-                &user.id,
-                &user.username,
-                &user.avatar_url,
-                &user.last_login,
-                &user.created_at,
-                &user.friends,
-                &user.status,
-                &user.online,
-            ],
-        )
-        .await{
-        Err(e) => return Err(format!("Database insertion failed: {}", e)),
-        Ok(_) => (),
-        };
-
-    match client
-        .query_one("SELECT * FROM users WHERE id = $1", &[&user.id])
-        .await
-    {
-        Err(e) => return Err(format!("Database query failed: {}", e)),
-        Ok(row) => {
-            let fetched_username: String = row.get("name");
-            if (fetched_username == user.username) {
-                Ok(format!("User inserted successfully: {:?}", user))
-            } else {
-                Err("Inserted user data does not match.".to_string())
-            }
-        }
-    }
 }
