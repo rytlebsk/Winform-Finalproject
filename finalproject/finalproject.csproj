@@ -58,16 +58,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="findvideo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="findvideo.Designer.cs">
+      <DependentUpon>findvideo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="friendlist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="friendlist.Designer.cs">
+      <DependentUpon>friendlist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="joinroom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="joinroom.Designer.cs">
+      <DependentUpon>joinroom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="findvideo.resx">
+      <DependentUpon>findvideo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="friendlist.resx">
+      <DependentUpon>friendlist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="joinroom.resx">
+      <DependentUpon>joinroom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

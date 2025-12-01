@@ -177,5 +177,34 @@ namespace finalproject
             }
             */
         }
+
+        private void webView22_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form2 newForm = new Form2();
+            newForm.Show();
+        }
+
+        private void friendlist_Click(object sender, EventArgs e)
+        {
+            friendlist friendlist = new friendlist();
+            friendlist.Show();
+        }
+
+        private void joinroom_Click(object sender, EventArgs e)
+        {
+            joinroom joinroom = new joinroom();
+            joinroom.Show();
+        }
+
+        private void findvideo_Click(object sender, EventArgs e)
+        {
+            findvideo findvideo = new findvideo();
+            findvideo.Show();
+        }
     }
 }
