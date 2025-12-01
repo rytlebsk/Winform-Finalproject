@@ -19,3 +19,26 @@ html {
   flex: 1;
   display: flex;
 }
+
+.default-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-screen-box {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: silver;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.default-screen-text {
+  font-size: 40px;
+  margin: 0;
+}
