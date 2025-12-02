@@ -1,11 +1,12 @@
-export class ws {
+export class wSocket {
   constructor(_url) {
     this.url = _url;
     this.ws = null;
     this.reconnectInterval = 3000; // 3 seconds
 
-    // receive message handler
+    // receive message object
     this.onReceive = null;
+    this.connectHandshake = null;
 
     this.connect();
   }
@@ -14,12 +15,13 @@ export class ws {
 
     this.ws.onopen = () => {
       console.log("Connected to video queue WebSocket server.");
+      if (this.connectHandshake) this.connectHandshake();
     };
 
     this.ws.onmessage = (event) => {
       try {
         const message = JSON.parse(event.data);
-        this.handleMessage(message);
+        if (this.onReceive) this.onReceive(message);
       } catch (e) {
         console.error("Receive: Error parsing message:", e);
       }

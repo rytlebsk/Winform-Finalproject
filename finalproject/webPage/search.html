@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="videoPage.css" />
-    <script src="test.js"></script>
+    <link rel="stylesheet" href="search.css" />
+    <script src="search.js"></script>
     <title>Document</title>
   </head>
-  <body onload="page_on_load()" style="margin: 0; overflow: hidden">
+  <body>
     <script src="https://www.youtube.com/iframe_api"></script>
     <div id="video-container">
       <div class="search-bar">
@@ -19,7 +19,22 @@
         />
         <button class="search-button" onclick="searchVideos()">Search</button>
       </div>
-      <div class="video-box" id="video1">
+      <div class="video-box" id="video1" onclick="openAddVideoConfirmPage()">
+        <div class="video-item">
+          <picture class="video-preview-picture">
+            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
+          </picture>
+          <div class="video-info">
+            <div class="video-title">
+              <p class="video-title-text">title</p>
+            </div>
+            <div class="video-discription">
+              <p class="video-discription-text">discriptions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="video-box" id="video2" onclick="openAddVideoConfirmPage()">
         <div class="video-item">
           <picture class="video-preview-picture">
             <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
@@ -34,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="video-box" id="video2">
+      <div class="video-box" id="video3" onclick="openAddVideoConfirmPage()">
         <div class="video-item">
           <picture class="video-preview-picture">
             <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
@@ -49,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div class="video-box" id="video3">
+      <div class="video-box" id="video4" onclick="openAddVideoConfirmPage()">
         <div class="video-item">
           <picture class="video-preview-picture">
             <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
@@ -64,22 +79,7 @@
           </div>
         </div>
       </div>
-      <div class="video-box" id="video4">
-        <div class="video-item">
-          <picture class="video-preview-picture">
-            <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
-          </picture>
-          <div class="video-info">
-            <div class="video-title">
-              <p class="video-title-text">title</p>
-            </div>
-            <div class="video-discription">
-              <p class="video-discription-text">discription</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="video-box" id="video5">
+      <div class="video-box" id="video5" onclick="openAddVideoConfirmPage()">
         <div class="video-item">
           <picture class="video-preview-picture">
             <img src="picture-lake.jpg" alt="lake" class="video-preview-img" />
@@ -95,6 +95,37 @@
         </div>
       </div>
     </div>
-    <div id="message"></div>
+    <div class="videoConfirm-container" id="videoConfirmContainer">
+      <div class="videoConfirm-box">
+        <p class="videoConfirm-text">Add this video to the video Queue?</p>
+        <div class="videoConfirm-button-container">
+          <div class="videoConfirm-box">
+            <picture class="videoConfirm-preview-picture">
+              <img
+                src="picture-lake.jpg"
+                alt="lake"
+                class="videoConfirm-preview-img"
+              />
+            </picture>
+            <div class="videoConfirm-info">
+              <div class="videoConfirm-title">
+                <p class="videoConfirm-title-text">title</p>
+              </div>
+              <div class="videoConfirm-discription">
+                <p class="videoConfirm-discription-text">discription</p>
+              </div>
+            </div>
+            <div class="videoConfirm-buttons-group">
+              <button class="videoConfirm-button" onclick="confirmAddVideo()">
+                Confirm
+              </button>
+              <button class="videoCancel-button" onclick="cancelAddVideo()">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

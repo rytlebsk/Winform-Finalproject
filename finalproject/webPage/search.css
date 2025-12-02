@@ -1,12 +1,17 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
 #video-container {
   display: flex;
-  height: 800px;
+  flex: 1;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  gap: 30px;
+  gap: 1rem;
   padding-top: 5%;
-  overflow: scroll;
 }
 
 .video-box {
@@ -32,7 +37,7 @@
 .video-item {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start; /* align picture and info to the top */
+  align-items: stretch; /* align picture and info to the top */
   width: 100%;
   background-color: transparent;
   flex-direction: row;
@@ -40,11 +45,14 @@
 }
 
 .video-preview-picture {
-  width: 100px;
-  height: 70px;
   border: 1px solid black;
   margin: 5px;
-  flex: 0 0 100px; /* fixed box so info can use remaining space */
+  flex: 0 0 30%; /* fixed box so info can use remaining space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  aspect-ratio: 16/9;
 }
 
 .video-preview-img {
@@ -98,10 +106,10 @@
 
 .search-bar {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 1%;
   gap: 12px;
 }
 
@@ -109,7 +117,7 @@
   width: 50%;
   height: 100%;
   font-size: 20px;
-  padding: 0 10px;
+  padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
@@ -120,9 +128,9 @@
 }
 
 .search-button {
-  height: 40px;
+  height: 100%;
   font-size: 20px;
-  padding: 0 20px;
+  padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f0f0f0;
@@ -130,4 +138,109 @@
 }
 .search-button:hover {
   background-color: #e0e0e0;
+}
+
+.videoConfirm-container {
+  display: none; /* hidden by default */
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.videoConfirm-box {
+  display: flex;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.videoConfirm-preview-picture {
+  border: 1px solid black;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.videoConfirm-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.videoConfirm-text {
+  display: flex;
+  margin: 0;
+  font-size: 25px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.videoConfirm-buttons-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 1rem;
+}
+
+.videoConfirm-button {
+  font-size: 20px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+.videoCancel-button {
+  font-size: 20px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+.videoConfirm-button:hover {
+  background-color: #74e9f879;
+  cursor: pointer;
+}
+.videoCancel-button:hover {
+  background-color: #f9747479;
+  cursor: pointer;
+}
+
+.videoConfirm-info {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.videoConfirm-title-text {
+  display: flex;
+  font-size: 30px;
+  margin: 0;
+  padding-top: 0.5rem;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.videoConfirm-discription-text {
+  display: flex;
+  font-size: 20px;
+  margin: 0;
+  padding-top: 0.5rem;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
