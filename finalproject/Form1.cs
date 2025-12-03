@@ -26,7 +26,7 @@ namespace finalproject
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Connect("ws://128.0.0.1");
+            Connect("ws://localhost:3000");
             HttpListener listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8080/");
             listener.Prefixes.Add("http://localhost:8000/");
@@ -190,25 +190,25 @@ namespace finalproject
         private void button4_Click(object sender, EventArgs e)
         {
             Form2 newForm = new Form2();
-            newForm.Show();
+            newForm.ShowDialog();
         }
 
         private void friendlist_Click(object sender, EventArgs e)
         {
             friendlist friendlist = new friendlist();
-            friendlist.Show();
+            friendlist.ShowDialog();
         }
 
         private void joinroom_Click(object sender, EventArgs e)
         {
             joinroom joinroom = new joinroom();
-            joinroom.Show();
+            joinroom.ShowDialog();
         }
 
         private void findvideo_Click(object sender, EventArgs e)
         {
             findvideo findvideo = new findvideo();
-            findvideo.Show();
+            findvideo.ShowDialog();
         }
 
         //websocket
