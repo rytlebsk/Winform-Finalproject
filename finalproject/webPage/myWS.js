@@ -14,7 +14,7 @@ export class wSocket {
     this.ws = new WebSocket(this.url);
 
     this.ws.onopen = () => {
-      console.log("Connected to video queue WebSocket server.");
+      console.log("Connected to video WebSocket server.");
       if (this.connectHandshake) this.connectHandshake();
     };
 
