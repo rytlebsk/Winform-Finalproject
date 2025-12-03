@@ -53,6 +53,7 @@
             this.Controls.Add(this.webView21);
             this.Name = "joinroom";
             this.Text = "joinroom";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.joinroom_FormClosing);
             this.Load += new System.EventHandler(this.joinroom_Load);
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             this.ResumeLayout(false);

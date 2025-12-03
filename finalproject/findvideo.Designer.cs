@@ -53,6 +53,8 @@
             this.Controls.Add(this.webView21);
             this.Name = "findvideo";
             this.Text = "findvideo";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.findvideo_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.findvideo_FormClosed);
             this.Load += new System.EventHandler(this.findvideo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             this.ResumeLayout(false);
