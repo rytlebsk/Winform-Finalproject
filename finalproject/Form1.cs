@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace finalproject
 {
@@ -29,12 +31,13 @@ namespace finalproject
         private async void Form1_Load(object sender, EventArgs e)
         {
             await Connect("ws://localhost:3000");
+            LoginMessage lmsg = readUserInfo();
             // Login
             LoginMessage loginMessage = new LoginMessage
             {
                 Event = "login",
-                id = "",
-                roomId = ""
+                id = $"{lmsg.id}",
+                roomId = $"{lmsg.roomId}"
             };
             string loginJson = JsonSerializer.Serialize(loginMessage);
             await SendMessage(loginJson);
@@ -298,6 +301,15 @@ namespace finalproject
                         // *** 在这里处理您的业务逻辑 ***
                         Console.WriteLine($"Receive Message: {receivedMessage}");
                         // 如果是 UI 应用，需要在这里使用 Dispatcher 或 SynchronizationContext 更新 UI
+
+                        // save json
+                        var jsonDoc = JsonDocument.Parse(receivedMessage);
+                        var root = jsonDoc.RootElement;
+                        object dataToSave = new {
+                            id = root.GetProperty("id").GetString(),
+                            room_id = root.GetProperty("room_id").GetString(),
+                        };
+                        await SaveJsonAsync(dataToSave, "userInfo.json");
                     }
                 }
             }
@@ -357,6 +369,53 @@ namespace finalproject
                 Console.WriteLine("连接已关闭。");
             }
         }
+        public async Task SaveJsonAsync(object data, string filename)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+            };
+
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
+
+            using (FileStream createStream = File.Create(filePath))
+            {
+                await JsonSerializer.SerializeAsync(createStream, data, options);
+            }
+        }
+
+        public LoginMessage readUserInfo()
+        {
+            return ReadJSONFile("userInfo.json");
+        }
+
+        public LoginMessage ReadJSONFile(string filePath)
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(filePath);
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                LoginMessage result = JsonSerializer.Deserialize<LoginMessage>(jsonString, options);
+
+                return result;
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("cannot find the file");
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"JSON parse error: {ex.Message}");
+                return null;
+            }
+        }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
 
@@ -366,19 +425,26 @@ namespace finalproject
         {
             Close();
         }
+
+        public void joinRoom()
+        {
+
+        }
     }
 
-    class SocketMessages
+    public class SocketMessages
     {
         [JsonPropertyName("event")]
         public string Event { get; set; }
     }
 
-    class LoginMessage : SocketMessages
+    public class LoginMessage : SocketMessages
     {
         [JsonPropertyName("id")]
         public string id { get; set; }
         [JsonPropertyName("room_id")]
         public string roomId { get; set; }
+        [JsonPropertyName("msg")]
+        public string message { get; set; }
     }
 }

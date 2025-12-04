@@ -81,17 +81,18 @@ function fetchFriendList() {
   });
 }
 
-function inviteFriend() {
-  //get friend room_id by send uid
-  ws.send({});
+async function inviteFriend() {
+  // get current room id
+  const response = await fetch("userInfo.json");
+  if (!response.ok) {
+    console.error("Failed to load userInfo.json:", response.statusText);
+    return;
+  }
+  const data = await response.json();
   // generate invite link
-  const urlString = new URL(window.location).host + "/video.html";
-  console.log("Current URL:", urlString);
-  const url = new URL("http://" + urlString);
-  const newRoomId = "some-generated-room-id"; // get from server response
-  url.searchParams.set("room", newRoomId);
+  const urlString = data.room_id;
 
-  navigator.clipboard.writeText(url.toString()).then(() => {
+  navigator.clipboard.writeText(urlString).then(() => {
     alert("Invite link copied to clipboard!");
   });
 }

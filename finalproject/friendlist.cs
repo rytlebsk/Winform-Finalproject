@@ -32,7 +32,7 @@ namespace finalproject
             listener.Start();
 
             // 2. 在背景啟動 Server 監聽
-            var content = new FileStream("videoQueue.html", FileMode.Open, FileAccess.Read);
+            var content = new FileStream("friendList.html", FileMode.Open, FileAccess.Read);
             Task.Run(() =>
             {
                 // 檢查 listener 是否存在且正在監聽
@@ -50,7 +50,7 @@ namespace finalproject
 
                         // 取得檔名與路徑邏輯...
                         string filename = request.Url.AbsolutePath.TrimStart('/');
-                        if (string.IsNullOrEmpty(filename)) filename = "video.html";
+                        if (string.IsNullOrEmpty(filename)) filename = "friendList.html";
                         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
 
                         if (File.Exists(filePath))

@@ -6,7 +6,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,8 +24,9 @@ namespace finalproject
             InitializeComponent();
         }
 
-        private void joinroom_Load(object sender, EventArgs e)
+        private async void joinroom_Load(object sender, EventArgs e)
         {
+            await Connect("ws://localhost:3000");
             listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8777/");
             listener.Start();
@@ -124,5 +129,219 @@ namespace finalproject
                 }
             }
         }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            LoginMessage userInfo = readUserInfo();
+            string id = userInfo.id;
+            string roomId = textBox1.Text;
+            if (roomId != "")
+            {
+                RoomMessage roomMessage = new RoomMessage {
+                    Event = "join_room",
+                    Id = id,
+                    RoomId = roomId,
+                };
+                string jsonString = JsonSerializer.Serialize(roomMessage);
+                await SendMessage(jsonString);
+            }
+        }
+
+        //websocket
+        public ClientWebSocket clientWebSocket;
+        public CancellationTokenSource cancellationTokenSource;
+        public async Task Connect(string serverUri)
+        {
+            clientWebSocket = new ClientWebSocket();
+            // 使用 CancellationTokenSource 来管理连接和接收任务的取消
+            cancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                Console.WriteLine($"Connecting {serverUri}...");
+
+                // 建立连接
+                await clientWebSocket.ConnectAsync(
+                    new Uri(serverUri),
+                    cancellationTokenSource.Token
+                );
+
+                Console.WriteLine("connect success！status：" + clientWebSocket.State);
+
+                // 连接成功后，启动后台任务来持续接收消息
+                Task.Run(() => ReceiveLoop());
+
+            }
+            catch (WebSocketException ex)
+            {
+                Console.WriteLine($"connect error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unknown error: {ex.Message}");
+            }
+        }
+        //接收
+        private async Task ReceiveLoop()
+        {
+            // 定义一个缓冲区来存储接收到的数据
+            var buffer = new byte[1024 * 4];
+
+            try
+            {
+                while (clientWebSocket.State == WebSocketState.Open)
+                {
+                    // 创建一个 ArraySegment 来接收数据
+                    var segment = new ArraySegment<byte>(buffer);
+
+                    // 异步等待接收数据
+                    WebSocketReceiveResult result = await clientWebSocket.ReceiveAsync(
+                        segment,
+                        cancellationTokenSource.Token
+                    );
+
+                    // 检查连接是否被服务器关闭
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        await clientWebSocket.CloseAsync(
+                            WebSocketCloseStatus.NormalClosure,
+                            "由服务器发起关闭",
+                            CancellationToken.None
+                        );
+                        Console.WriteLine("websocket disconnected");
+                        break;
+                    }
+
+                    // 处理接收到的文本消息
+                    if (result.MessageType == WebSocketMessageType.Text)
+                    {
+                        // 将接收到的字节转换为字符串
+                        string receivedMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
+
+                        // *** 在这里处理您的业务逻辑 ***
+                        Console.WriteLine($"Receive Message: {receivedMessage}");
+                        // 如果是 UI 应用，需要在这里使用 Dispatcher 或 SynchronizationContext 更新 UI
+
+                        var jsonDoc = JsonDocument.Parse(receivedMessage);
+                        var root = jsonDoc.RootElement;
+                        RoomReceiveMessage data = new RoomReceiveMessage
+                        {
+                            Id = root.GetProperty("id").GetString(),
+                            RoomId = root.GetProperty("room_id").GetString(),
+                            Msg = root.GetProperty("msg").GetString(),
+                            statusCode = root.GetProperty("status_code").GetInt32()
+                        };
+                        if(data.statusCode == 2000)
+                        {
+                            Console.WriteLine("join room success");
+                        }
+                    }
+                }
+            }
+            catch (WebSocketException ex) when (ex.WebSocketErrorCode == WebSocketError.ConnectionClosedPrematurely)
+            {
+                Console.WriteLine("unintentially disconnect");
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("消息接收任务被取消。");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"接收消息时发生错误: {ex.Message}");
+            }
+        }
+
+        //發送
+        public async Task SendMessage(string message)
+        {
+            if (clientWebSocket.State == WebSocketState.Open)
+            {
+                // 1. 将字符串编码为 UTF-8 字节数组
+                byte[] buffer = Encoding.UTF8.GetBytes(message);
+                var segment = new ArraySegment<byte>(buffer);
+
+                // 2. 异步发送消息
+                await clientWebSocket.SendAsync(
+                    segment,
+                    WebSocketMessageType.Text,
+                    true, // endOfMessage: true 表示这是一个完整的消息
+                    cancellationTokenSource.Token
+                );
+
+                Console.WriteLine($"sent: {message}");
+            }
+            else
+            {
+                Console.WriteLine("disconnected, cant send message");
+            }
+        }
+
+        //關機
+        public async Task Close()
+        {
+            if (clientWebSocket != null && clientWebSocket.State == WebSocketState.Open)
+            {
+                // 1. 取消正在运行的接收任务
+                cancellationTokenSource.Cancel();
+
+                // 2. 异步关闭连接
+                await clientWebSocket.CloseAsync(
+                    WebSocketCloseStatus.NormalClosure,
+                    "客户端主动关闭",
+                    CancellationToken.None
+                );
+                Console.WriteLine("连接已关闭。");
+            }
+        }
+        public LoginMessage readUserInfo()
+        {
+            return ReadJSONFile("userInfo.json");
+        }
+
+        public LoginMessage ReadJSONFile(string filePath)
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(filePath);
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                LoginMessage result = JsonSerializer.Deserialize<LoginMessage>(jsonString, options);
+
+                return result;
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("cannot find the file");
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"JSON parse error: {ex.Message}");
+                return null;
+            }
+        }
+    }
+
+    public class RoomMessage
+    {
+        [JsonPropertyName("event")]
+        public string Event { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+        [JsonPropertyName("room_id")]
+        public string RoomId { get; set; }
+    }
+
+    public class RoomReceiveMessage : RoomMessage
+    {
+        [JsonPropertyName("msg")]
+        public string Msg { get; set; }
+        [JsonPropertyName("status_code")]
+        public int statusCode { get; set; }
     }
 }

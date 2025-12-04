@@ -13,8 +13,6 @@ ws.connectHandshake = () => {
   const id = localStorage.getItem("id") || "";
   const currentRoomId = getCurrentRoomId() || "";
 
-  console.log("WebSocket handshake sent:", { id: id, room_id: currentRoomId });
-
   //fetch video queue
   ws.send({});
 };
@@ -61,9 +59,24 @@ ws.onReceive = (message) => {
   }
 };
 
+async function page_load() {
+  console.log("Page loaded");
+  const response = await fetch("userInfo.json");
+  if (!response.ok) {
+    console.error("Failed to load userInfo.json:", response.statusText);
+    return;
+  }
+  const data = await response.json();
+  console.log(data);
+}
+
 function updateRoomUrl(newRoomId) {
   const url = new URL(window.location);
 
   url.searchParams.set("room", newRoomId);
   window.history.pushState({}, "", url);
 }
+
+// define globally for HTML to access because of script type="module"
+window.page_load = page_load;
+window.updateRoomUrl = updateRoomUrl;
