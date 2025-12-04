@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace finalproject
 {
@@ -25,11 +26,20 @@ namespace finalproject
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
-            Connect("ws://localhost:3000");
+            await Connect("ws://localhost:3000");
             // Login
-            SendMessage("{}");
+            LoginMessage loginMessage = new LoginMessage
+            {
+                Event = "login",
+                id = "",
+                roomId = ""
+            };
+            string loginJson = JsonSerializer.Serialize(loginMessage);
+            await SendMessage(loginJson);
+            Console.WriteLine("Sent login message: " + loginJson);
+
             HttpListener listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8080/");
             listener.Prefixes.Add("http://localhost:8000/");
@@ -225,7 +235,7 @@ namespace finalproject
 
             try
             {
-                Console.WriteLine($"正在连接到 {serverUri}...");
+                Console.WriteLine($"Connecting {serverUri}...");
 
                 // 建立连接
                 await clientWebSocket.ConnectAsync(
@@ -233,7 +243,7 @@ namespace finalproject
                     cancellationTokenSource.Token
                 );
 
-                Console.WriteLine("连接成功！状态：" + clientWebSocket.State);
+                Console.WriteLine("connect success！status：" + clientWebSocket.State);
 
                 // 连接成功后，启动后台任务来持续接收消息
                 Task.Run(() => ReceiveLoop());
@@ -241,11 +251,11 @@ namespace finalproject
             }
             catch (WebSocketException ex)
             {
-                Console.WriteLine($"连接失败: {ex.Message}");
+                Console.WriteLine($"connect error: {ex.Message}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"发生未知错误: {ex.Message}");
+                Console.WriteLine($"Unknown error: {ex.Message}");
             }
         }
         //接收
@@ -275,7 +285,7 @@ namespace finalproject
                             "由服务器发起关闭",
                             CancellationToken.None
                         );
-                        Console.WriteLine("服务器关闭了连接。");
+                        Console.WriteLine("websocket disconnected");
                         break;
                     }
 
@@ -286,14 +296,14 @@ namespace finalproject
                         string receivedMessage = Encoding.UTF8.GetString(buffer, 0, result.Count);
 
                         // *** 在这里处理您的业务逻辑 ***
-                        Console.WriteLine($"收到服务器消息: {receivedMessage}");
+                        Console.WriteLine($"Receive Message: {receivedMessage}");
                         // 如果是 UI 应用，需要在这里使用 Dispatcher 或 SynchronizationContext 更新 UI
                     }
                 }
             }
             catch (WebSocketException ex) when (ex.WebSocketErrorCode == WebSocketError.ConnectionClosedPrematurely)
             {
-                Console.WriteLine("连接意外中断。");
+                Console.WriteLine("unintentially disconnect");
             }
             catch (OperationCanceledException)
             {
@@ -322,11 +332,11 @@ namespace finalproject
                     cancellationTokenSource.Token
                 );
 
-                Console.WriteLine($"已发送: {message}");
+                Console.WriteLine($"sent: {message}");
             }
             else
             {
-                Console.WriteLine("连接未打开，无法发送消息。");
+                Console.WriteLine("disconnected, cant send message");
             }
         }
 
@@ -356,5 +366,19 @@ namespace finalproject
         {
             Close();
         }
+    }
+
+    class SocketMessages
+    {
+        [JsonPropertyName("event")]
+        public string Event { get; set; }
+    }
+
+    class LoginMessage : SocketMessages
+    {
+        [JsonPropertyName("id")]
+        public string id { get; set; }
+        [JsonPropertyName("room_id")]
+        public string roomId { get; set; }
     }
 }

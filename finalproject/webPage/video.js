@@ -14,11 +14,9 @@ ws.connectHandshake = () => {
   const currentRoomId = getCurrentRoomId() || "";
 
   console.log("WebSocket handshake sent:", { id: id, room_id: currentRoomId });
-  ws.send({
-    event: "login",
-    id: id,
-    room_id: currentRoomId,
-  });
+
+  //fetch video queue
+  ws.send({});
 };
 
 ws.onReceive = (message) => {
