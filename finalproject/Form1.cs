@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json.Serialization;
 
 namespace finalproject
 {
@@ -27,6 +28,8 @@ namespace finalproject
         private void Form1_Load(object sender, EventArgs e)
         {
             Connect("ws://localhost:3000");
+            // Login
+            SendMessage("{}");
             HttpListener listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8080/");
             listener.Prefixes.Add("http://localhost:8000/");
