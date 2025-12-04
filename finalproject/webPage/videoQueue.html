@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./videoQueue.css" />
-    <script src="room.js"></script>
+    <script type="module" src="videoQueue.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <title>Video Queue Page</title>
   </head>
-  <body>
+  <body onload="fetchVideoQueue()">
     <div class="video-queue-container">
       <div class="video-queue-box">
         <div class="video-item-box">
