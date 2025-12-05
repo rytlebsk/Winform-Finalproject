@@ -5,30 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="video.css" />
     <script type="module" src="video.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
     <title>Room Page</title>
   </head>
   <body onload="page_load()">
     <div class="video-container">
-      <iframe
-        id="video-item"
-        class="video-item"
-        src="https://www.youtube.com/embed/Y0SWx_n_AeQ?si=I5Tkd-X4OEzMtqGd"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      <div class="default-screen" id="default-screen">
-        <div class="default-screen-box">
-          <p class="default-screen-text">
-            No video is in the video queue.
-            <br />
-            <br />
-            Please add a video to start watching!
-          </p>
-        </div>
-      </div>
+      <div id="player"></div>
+      <script type="module" src="video.js"></script>
     </div>
   </body>
 </html>

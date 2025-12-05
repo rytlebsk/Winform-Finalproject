@@ -14,8 +14,8 @@ ws.onReceive = (message) => {
 
 //Interface for video queue data
 class VideoQueueItem {
-  constructor(id, title, url) {
-    this.id = id;
+  constructor(avatarUrl, title, url) {
+    this.avatarUrl = avatarUrl;
     this.title = title;
     this.url = url;
   }
@@ -30,17 +30,13 @@ ws.onReceive = (message) => {
 function fetchVideoQueue() {
   ws.send({ action: "getVideoQueue" });
   // Simulated video queue data; replace with server response
-  const videoQueue = [
-    new VideoQueueItem(1, "Sample Video 1", "https://www.example.com/video1"),
-    new VideoQueueItem(2, "Sample Video 2", "https://www.example.com/video2"),
-    new VideoQueueItem(3, "Sample Video 3", "https://www.example.com/video3"),
-  ];
+  const videoQueue = [];
   refreshVideoQueue(videoQueue);
 }
 
 function refreshVideoQueue(videoQueue) {
   const container = document.querySelector(".video-queue-box");
-  //container.innerHTML = ""; // clear existing list
+  container.innerHTML = ""; // clear existing list
   videoQueue.forEach((video) => {
     addVideoQueueItem(container, video);
   });
@@ -53,7 +49,7 @@ function addVideoQueueItem(container, video) {
   <div class="video-preview-picture">
             <img
               class="video-preview-img"
-              src="${video.url}"
+              src="${video.avatarUrl}"
               alt="Video Preview"
             />
           </div>
@@ -70,3 +66,10 @@ function addVideoQueueItem(container, video) {
 // define globally for HTML to access because of script type="module"
 window.refreshVideoQueue = refreshVideoQueue;
 window.fetchVideoQueue = fetchVideoQueue;
+
+window.updateVideoList = function (newVideoQueue) {
+  newVideoQueue = newVideoQueue.map(
+    (video) => new VideoQueueItem(video.thumbnail_url, video.title, video.url)
+  );
+  refreshVideoQueue(newVideoQueue);
+};

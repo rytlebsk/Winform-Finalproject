@@ -26,7 +26,6 @@ namespace finalproject
 
         private async void joinroom_Load(object sender, EventArgs e)
         {
-            await Connect("ws://localhost:3000");
             listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8777/");
             listener.Start();
@@ -132,19 +131,9 @@ namespace finalproject
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            LoginMessage userInfo = readUserInfo();
-            string id = userInfo.id;
             string roomId = textBox1.Text;
-            if (roomId != "")
-            {
-                RoomMessage roomMessage = new RoomMessage {
-                    Event = "join_room",
-                    Id = id,
-                    RoomId = roomId,
-                };
-                string jsonString = JsonSerializer.Serialize(roomMessage);
-                await SendMessage(jsonString);
-            }
+            Form1 form1 = new Form1();
+            form1.joinRoom(roomId);
         }
 
         //websocket

@@ -40,6 +40,8 @@
             this.friendlist = new System.Windows.Forms.Button();
             this.joinroom = new System.Windows.Forms.Button();
             this.findvideo = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView23)).BeginInit();
@@ -47,10 +49,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(628, 120);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBox1.Location = new System.Drawing.Point(471, 104);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(344, 25);
+            this.textBox1.Size = new System.Drawing.Size(259, 20);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
@@ -58,19 +59,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(579, 123);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(434, 107);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(26, 15);
+            this.label1.Size = new System.Drawing.Size(21, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "ID:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(355, 790);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button1.Location = new System.Drawing.Point(245, 685);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(216, 106);
+            this.button1.Size = new System.Drawing.Size(162, 92);
             this.button1.TabIndex = 3;
             this.button1.Text = "play";
             this.button1.UseVisualStyleBackColor = true;
@@ -78,10 +77,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(684, 790);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button2.Location = new System.Drawing.Point(513, 685);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(216, 106);
+            this.button2.Size = new System.Drawing.Size(162, 92);
             this.button2.TabIndex = 4;
             this.button2.Text = "pause";
             this.button2.UseVisualStyleBackColor = true;
@@ -89,10 +87,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1003, 790);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button3.Location = new System.Drawing.Point(782, 685);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(216, 106);
+            this.button3.Size = new System.Drawing.Size(162, 92);
             this.button3.TabIndex = 5;
             this.button3.Text = "next";
             this.button3.UseVisualStyleBackColor = true;
@@ -103,10 +100,10 @@
             this.webView21.AllowExternalDrop = true;
             this.webView21.CreationProperties = null;
             this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView21.Location = new System.Drawing.Point(355, 188);
-            this.webView21.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.webView21.Enabled = false;
+            this.webView21.Location = new System.Drawing.Point(285, 163);
             this.webView21.Name = "webView21";
-            this.webView21.Size = new System.Drawing.Size(891, 562);
+            this.webView21.Size = new System.Drawing.Size(668, 487);
             this.webView21.TabIndex = 0;
             this.webView21.ZoomFactor = 1D;
             this.webView21.Click += new System.EventHandler(this.webView21_Click);
@@ -116,10 +113,9 @@
             this.webView22.AllowExternalDrop = true;
             this.webView22.CreationProperties = null;
             this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView22.Location = new System.Drawing.Point(1253, 188);
-            this.webView22.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.webView22.Location = new System.Drawing.Point(969, 163);
             this.webView22.Name = "webView22";
-            this.webView22.Size = new System.Drawing.Size(309, 562);
+            this.webView22.Size = new System.Drawing.Size(436, 487);
             this.webView22.TabIndex = 7;
             this.webView22.ZoomFactor = 1D;
             this.webView22.Click += new System.EventHandler(this.webView22_Click);
@@ -129,18 +125,18 @@
             this.webView23.AllowExternalDrop = true;
             this.webView23.CreationProperties = null;
             this.webView23.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView23.Location = new System.Drawing.Point(17, 188);
-            this.webView23.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.webView23.Location = new System.Drawing.Point(13, 163);
             this.webView23.Name = "webView23";
-            this.webView23.Size = new System.Drawing.Size(329, 562);
+            this.webView23.Size = new System.Drawing.Size(247, 487);
             this.webView23.TabIndex = 8;
             this.webView23.ZoomFactor = 1D;
             // 
             // addFriend
             // 
-            this.addFriend.Location = new System.Drawing.Point(1072, 78);
+            this.addFriend.Location = new System.Drawing.Point(804, 68);
+            this.addFriend.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.addFriend.Name = "addFriend";
-            this.addFriend.Size = new System.Drawing.Size(118, 67);
+            this.addFriend.Size = new System.Drawing.Size(88, 58);
             this.addFriend.TabIndex = 9;
             this.addFriend.Text = "添加好友";
             this.addFriend.UseVisualStyleBackColor = true;
@@ -148,9 +144,10 @@
             // 
             // friendlist
             // 
-            this.friendlist.Location = new System.Drawing.Point(1196, 78);
+            this.friendlist.Location = new System.Drawing.Point(897, 68);
+            this.friendlist.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.friendlist.Name = "friendlist";
-            this.friendlist.Size = new System.Drawing.Size(118, 67);
+            this.friendlist.Size = new System.Drawing.Size(88, 58);
             this.friendlist.TabIndex = 10;
             this.friendlist.Text = "好友清單";
             this.friendlist.UseVisualStyleBackColor = true;
@@ -158,9 +155,10 @@
             // 
             // joinroom
             // 
-            this.joinroom.Location = new System.Drawing.Point(1320, 78);
+            this.joinroom.Location = new System.Drawing.Point(990, 68);
+            this.joinroom.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.joinroom.Name = "joinroom";
-            this.joinroom.Size = new System.Drawing.Size(118, 67);
+            this.joinroom.Size = new System.Drawing.Size(88, 58);
             this.joinroom.TabIndex = 11;
             this.joinroom.Text = "加入房間";
             this.joinroom.UseVisualStyleBackColor = true;
@@ -168,19 +166,42 @@
             // 
             // findvideo
             // 
-            this.findvideo.Location = new System.Drawing.Point(1444, 78);
+            this.findvideo.Location = new System.Drawing.Point(1083, 68);
+            this.findvideo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.findvideo.Name = "findvideo";
-            this.findvideo.Size = new System.Drawing.Size(118, 67);
+            this.findvideo.Size = new System.Drawing.Size(88, 58);
             this.findvideo.TabIndex = 12;
             this.findvideo.Text = "搜尋影片";
             this.findvideo.UseVisualStyleBackColor = true;
             this.findvideo.Click += new System.EventHandler(this.findvideo_Click);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(437, 702);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(56, 59);
+            this.button4.TabIndex = 13;
+            this.button4.Text = "-10s";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(702, 702);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(56, 59);
+            this.button5.TabIndex = 14;
+            this.button5.Text = "+10s";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1579, 951);
+            this.ClientSize = new System.Drawing.Size(1432, 824);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.findvideo);
             this.Controls.Add(this.joinroom);
             this.Controls.Add(this.friendlist);
@@ -193,7 +214,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.webView21);
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -221,6 +241,8 @@
         private System.Windows.Forms.Button friendlist;
         private System.Windows.Forms.Button joinroom;
         private System.Windows.Forms.Button findvideo;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 

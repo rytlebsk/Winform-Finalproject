@@ -101,34 +101,20 @@ namespace finalproject
 
         private void button1_Click(object sender, EventArgs e)
         {
-            /*
-            string id = videolist.Items[0].ToString();
-
-            if (id != videoId)
-            {
-                if (id.Length != 0)
-                {
-                    try
-                    {
-                        webView21.Source = new Uri("http://localhost:8080/?videoId=" + id);
-                        videoId = id;
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error");
-                    }
-                }
-            }
-            else
-            {
-                webView21.ExecuteScriptAsync("playerControl('play')");
-            }
-            */
+            webView21.ExecuteScriptAsync("playerControl('play')");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             webView21.ExecuteScriptAsync("playerControl('pause')");
+        }
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("playerControl('rewind')");
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("playerControl('forward')");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -237,6 +223,13 @@ namespace finalproject
                     File.WriteAllText(path, contentToSave);
 
                     Console.WriteLine("save success！");
+                }
+                else if(root.TryGetProperty("action", out JsonElement actionEl1) && actionEl1.GetString() == "UPDATE_VIDEO_LIST")
+                {
+                    string content = root.GetProperty("content").ToString();
+                    webView22.ExecuteScriptAsync($"updateVideoList({content})");
+
+                    Console.WriteLine("video list updated！");
                 }
             }
 
@@ -444,11 +437,13 @@ namespace finalproject
         }
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-
+            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            webView21.ExecuteScriptAsync("logout");
+            Console.WriteLine("Form closed, logout sent.");
             Close();
         }
 
@@ -457,10 +452,12 @@ namespace finalproject
 
         }
 
-        public void joinRoom()
+        public void joinRoom(string room_id)
         {
-
+            Console.WriteLine("Joining room: " + room_id);
+            webView21.ExecuteScriptAsync($"joinRoom('{room_id}')");
         }
+
     }
 
     public class SocketMessages
