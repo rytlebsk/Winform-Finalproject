@@ -30,18 +30,8 @@ namespace finalproject
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            await Connect("ws://localhost:3000");
-            LoginMessage lmsg = readUserInfo();
-            // Login
-            LoginMessage loginMessage = new LoginMessage
-            {
-                Event = "login",
-                id = $"{lmsg.id}",
-                roomId = $"{lmsg.roomId}"
-            };
-            string loginJson = JsonSerializer.Serialize(loginMessage);
-            await SendMessage(loginJson);
-            Console.WriteLine("Sent login message: " + loginJson);
+            await webView21.EnsureCoreWebView2Async();
+            webView21.WebMessageReceived += WebView21_WebMessageReceived;
 
             HttpListener listener = new HttpListener();
             listener.Prefixes.Add("http://localhost:8080/");
@@ -138,7 +128,7 @@ namespace finalproject
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (videoId != null) webView21.ExecuteScriptAsync("playerControl('pause')");
+            webView21.ExecuteScriptAsync("playerControl('pause')");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -227,6 +217,32 @@ namespace finalproject
             findvideo.ShowDialog();
         }
 
+        public void WebView21_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            string message = e.TryGetWebMessageAsString();
+            Console.WriteLine("Received message from WebView2: " + message);
+
+            using (JsonDocument doc = JsonDocument.Parse(message))
+            {
+                JsonElement root = doc.RootElement;
+
+                // 判斷動作
+                if (root.TryGetProperty("action", out JsonElement actionEl) && actionEl.GetString() == "SAVE_FILE")
+                {
+                    // 取得要存的內容
+                    string contentToSave = root.GetProperty("content").ToString(); // 轉回 JSON 字串
+
+                    // 寫入檔案
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "userInfo.json");
+                    File.WriteAllText(path, contentToSave);
+
+                    Console.WriteLine("save success！");
+                }
+            }
+
+        }
+
+
         //websocket
         public ClientWebSocket clientWebSocket;
         public CancellationTokenSource cancellationTokenSource;
@@ -305,11 +321,21 @@ namespace finalproject
                         // save json
                         var jsonDoc = JsonDocument.Parse(receivedMessage);
                         var root = jsonDoc.RootElement;
-                        object dataToSave = new {
-                            id = root.GetProperty("id").GetString(),
-                            room_id = root.GetProperty("room_id").GetString(),
-                        };
-                        await SaveJsonAsync(dataToSave, "userInfo.json");
+                        string message = root.GetProperty("msg").GetString();
+                        switch (message)
+                        {
+                            case "Room status changed":
+
+                                break;
+                            default:
+                                object dataToSave = new
+                                {
+                                    id = root.GetProperty("id").GetString(),
+                                    room_id = root.GetProperty("room_id").GetString(),
+                                };
+                                await SaveJsonAsync(dataToSave, "userInfo.json");
+                                break;
+                        }
                     }
                 }
             }
@@ -424,6 +450,11 @@ namespace finalproject
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Close();
+        }
+
+        public void saveUserInfo()
+        {
+
         }
 
         public void joinRoom()
