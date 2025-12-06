@@ -19,9 +19,11 @@ namespace finalproject
     public partial class joinroom : Form
     {
         private HttpListener listener;
-        public joinroom()
+        private Form1 _parentForm;
+        public joinroom(Form1 parentForm)
         {
             InitializeComponent();
+            _parentForm = parentForm;
         }
 
         private async void joinroom_Load(object sender, EventArgs e)
@@ -49,7 +51,7 @@ namespace finalproject
 
                         // 取得檔名與路徑邏輯...
                         string filename = request.Url.AbsolutePath.TrimStart('/');
-                        if (string.IsNullOrEmpty(filename)) filename = "video.html";
+                        if (string.IsNullOrEmpty(filename)) filename = "videoList.html";
                         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
 
                         if (File.Exists(filePath))
@@ -132,8 +134,7 @@ namespace finalproject
         private async void button1_Click(object sender, EventArgs e)
         {
             string roomId = textBox1.Text;
-            Form1 form1 = new Form1();
-            form1.joinRoom(roomId);
+            _parentForm.joinRoom(roomId);
         }
 
         //websocket

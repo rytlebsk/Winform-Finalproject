@@ -36,8 +36,7 @@ ws.onReceive = (message) => {
       {
         if (statusCode === 4003) {
           // logout and login again
-          logout();
-          login();
+          alert("User already logged in elsewhere. Logging out first.");
         }
         if (statusCode === 2000) {
           // sent login data to C#
@@ -53,9 +52,64 @@ ws.onReceive = (message) => {
         }
       }
       break;
+    case "logout":
+      {
+        const userInfo = {
+          id: id,
+          room_id: "", // clear room_id on logout
+        };
+        const payload = JSON.stringify({
+          action: "SAVE_FILE",
+          content: userInfo,
+        });
+        sendMessageToCSharp(payload);
+      }
+      break;
     case "join_room":
       {
-        console.log(`Joined room: ${roomId}`);
+        //user already in the room
+        if (statusCode === 4003) {
+          const payload = JSON.stringify({
+            action: "USER_ALREADY_IN_ROOM",
+            content: msg,
+          });
+          sendMessageToCSharp(payload);
+        }
+        // room not exist
+        if (statusCode === 4004) {
+          const payload = JSON.stringify({
+            action: "ROOM_NOT_EXIST",
+            content: msg,
+          });
+          sendMessageToCSharp(payload);
+        }
+        if (statusCode === 2000) {
+          // sent new room_id to C#
+          const userInfo = {
+            id: id,
+            room_id: roomId,
+          };
+          const payload = JSON.stringify({
+            action: "SAVE_FILE",
+            content: userInfo,
+          });
+          sendMessageToCSharp(payload);
+        }
+      }
+      break;
+    case "leave_room":
+      {
+        if (statusCode === 2000) {
+          const userInfo = {
+            id: id,
+            room_id: roomId, // will be detribute to a new room_id by server
+          };
+          const payload = JSON.stringify({
+            action: "SAVE_FILE",
+            content: userInfo,
+          });
+          sendMessageToCSharp(payload);
+        }
       }
       break;
     case "update":
@@ -72,6 +126,13 @@ function updateRoom(data) {
     return;
   }
   // update video list
+  const videoList = data.room.video_queue;
+  const payload = JSON.stringify({
+    action: "UPDATE_VIDEO_LIST",
+    content: videoList,
+  });
+  sendMessageToCSharp(payload);
+
   // update members list
   const roomInfo = {
     room_id: data.room.id,
@@ -92,6 +153,13 @@ function updateRoom(data) {
   } else if (state === "Backward") {
     const newTime = player.getCurrentTime() - 10; // backward 10 seconds
     player.seekTo(newTime, true);
+  } else if (state === "Next") {
+    if (player && player.loadVideoById) {
+      const nextVideo = roomInfo.video_queue[0];
+      if (nextVideo) {
+        player.loadVideoById(extractYouTubeVideoId(nextVideo.url));
+      }
+    }
   }
 }
 
@@ -132,11 +200,19 @@ async function fetchUserInfo() {
   return data;
 }
 
-function updateRoomUrl(newRoomId) {
-  const url = new URL(window.location);
+function extractYouTubeVideoId(url) {
+  if (!url) return null;
 
-  url.searchParams.set("room", newRoomId);
-  window.history.pushState({}, "", url);
+  var regExp =
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  var match = url.match(regExp);
+
+  if (match && match[2].length == 11) {
+    return match[2];
+  } else {
+    console.error("無法解析 YouTube ID:", url);
+    return null;
+  }
 }
 
 function playerControl(action) {
@@ -145,7 +221,6 @@ function playerControl(action) {
 
 // define globally for HTML to access because of script type="module"
 window.page_load = page_load;
-window.updateRoomUrl = updateRoomUrl;
 window.playerControl = playerControl;
 window.sendMessageToCSharp = sendMessageToCSharp;
 window.updateRoom = updateRoom;
@@ -166,7 +241,7 @@ window.onYouTubeIframeAPIReady = function () {
   player = new YT.Player("player", {
     height: "100%",
     width: "100%",
-    videoId: "Y0SWx_n_AeQ",
+    videoId: "",
     playerVars: {
       playsinline: 1,
       controls: 1,
@@ -250,16 +325,40 @@ window.playerControl = async function (action) {
       room_id: userInfo.room_id,
     });
   }
+  if (action === "mute") {
+    if (player && player.mute) {
+      player.mute();
+    }
+  }
+  if (action === "unmute") {
+    if (player && player.unMute) {
+      player.unMute();
+    }
+  }
+  if (action === "addVolume") {
+    if (player && player.getVolume) {
+      let currentVolume = player.getVolume();
+      let newVolume = Math.min(currentVolume + 10, 100);
+      player.setVolume(newVolume);
+    }
+  }
+  if (action === "reduceVolume") {
+    if (player && player.getVolume) {
+      let currentVolume = player.getVolume();
+      let newVolume = Math.max(currentVolume - 10, 0);
+      player.setVolume(newVolume);
+    }
+  }
 };
 
-async function logout() {
+window.logout = async function () {
   const userInfo = await fetchUserInfo();
   ws.send({
     event: "logout",
     id: userInfo.id,
     room_id: userInfo.room_id,
   });
-}
+};
 
 async function login() {
   const userInfo = await fetchUserInfo();
@@ -271,11 +370,40 @@ async function login() {
 }
 
 window.joinRoom = async function (newRoomId) {
-  alert(`Joining room: ${newRoomId}`);
   const userInfo = await fetchUserInfo();
+  alert("Joining room: " + newRoomId + " with user ID: " + userInfo.id);
   ws.send({
     event: "join_room",
     id: userInfo.id,
     room_id: newRoomId,
+  });
+};
+
+window.leaveRoom = async function () {
+  const userInfo = await fetchUserInfo();
+  ws.send({
+    event: "leave_room",
+    id: userInfo.id,
+    room_id: userInfo.room_id,
+  });
+};
+
+window.addVideo = async function (videoUrl) {
+  const userInfo = await fetchUserInfo();
+  ws.send({
+    event: "transmission",
+    method: OperationMethod.ADD,
+    value: videoUrl,
+    room_id: userInfo.room_id,
+  });
+};
+
+window.changeToNextVideo = async function () {
+  const userInfo = await fetchUserInfo();
+  ws.send({
+    event: "transmission",
+    method: OperationMethod.NEXT,
+    value: "",
+    room_id: userInfo.room_id,
   });
 };

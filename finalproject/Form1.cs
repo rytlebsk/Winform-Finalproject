@@ -116,33 +116,35 @@ namespace finalproject
         {
             webView21.ExecuteScriptAsync("playerControl('forward')");
         }
+        private void button7_Click(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("playerControl('addVolume')");
+        }
+        private void button8_Click(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("playerControl('reduceVolume')");
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("playerControl('mute')");
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("playerControl('unmute')");
+        }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string videoId = textBox1.Text;
+            webView21.ExecuteScriptAsync($"addVideo('https://www.youtube.com/embed/{videoId}')");
+        }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            /*
-            videolist.Items.RemoveAt(0);
-            string id = videolist.Items[0].ToString();
-
-            if (id != videoId)
-            {
-                if (id.Length != 0)
-                {
-                    try
-                    {
-                        webView21.Source = new Uri("http://localhost:8080/?videoId=" + id);
-                        videoId = id;
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Error");
-                    }
-                }
-            }
-            else
-            {
-                webView21.ExecuteScriptAsync("playerControl('play')");
-            }
-            */
+            webView21.ExecuteScriptAsync("changeToNextVideo()");
+        }
+        private void button11_Click(object sender, EventArgs e)
+        {
+            webView21.ExecuteScriptAsync("leaveRoom()");
         }
 
         private void webView21_Click(object sender, EventArgs e)
@@ -193,7 +195,7 @@ namespace finalproject
 
         private void joinroom_Click(object sender, EventArgs e)
         {
-            joinroom joinroom = new joinroom();
+            joinroom joinroom = new joinroom(this);
             joinroom.ShowDialog();
         }
 
@@ -230,6 +232,14 @@ namespace finalproject
                     webView22.ExecuteScriptAsync($"updateVideoList({content})");
 
                     Console.WriteLine("video list updated！");
+                }
+                else if (root.TryGetProperty("action", out JsonElement actionEl2) && actionEl2.GetString() == "ROOM_NOT_EXIST")
+                {
+                    MessageBox.Show("Room does not exist. Please check the room ID and try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (root.TryGetProperty("action", out JsonElement actionEl3) && actionEl3.GetString() == "USER_ALREADY_IN_ROOM")
+                {
+                    MessageBox.Show("You are already in this room.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -440,11 +450,32 @@ namespace finalproject
             
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private bool isLoggedOut = false;
+        private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            webView21.ExecuteScriptAsync("logout");
-            Console.WriteLine("Form closed, logout sent.");
-            Close();
+            if (!isLoggedOut)
+            {
+                e.Cancel = true;
+
+                try
+                {
+                    await webView21.ExecuteScriptAsync("logout()");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("logout failed or timeout: " + ex.Message);
+                }
+                finally
+                {
+                    isLoggedOut = true;
+
+                    this.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("logout successful");
+            }
         }
 
         public void saveUserInfo()
@@ -455,7 +486,7 @@ namespace finalproject
         public void joinRoom(string room_id)
         {
             Console.WriteLine("Joining room: " + room_id);
-            webView21.ExecuteScriptAsync($"joinRoom('{room_id}')");
+            this.webView21.ExecuteScriptAsync($"joinRoom('{room_id}')");
         }
 
     }
