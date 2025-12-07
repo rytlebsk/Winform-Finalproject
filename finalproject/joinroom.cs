@@ -101,7 +101,7 @@ namespace finalproject
             // 3. 設定單一 WebView2
             try
             {
-                webView21.Source = new Uri("http://localhost:8777/");
+                
             }
             catch (Exception ex)
             {

@@ -5,25 +5,29 @@ html {
   margin: 0;
   height: 100%;
   background-color: gray;
+  overflow: hidden;
 }
 
 .video-container {
   display: flex;
   flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: black;
 }
 
-.video-item {
-  flex: 1;
-  display: flex;
+#player {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .default-screen {
-  flex: 1;
-  display: none;
-  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -41,4 +45,5 @@ html {
 .default-screen-text {
   font-size: 40px;
   margin: 0;
+  color: #333;
 }

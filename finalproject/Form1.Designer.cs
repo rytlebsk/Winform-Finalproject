@@ -49,6 +49,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.roomIdLabel = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView23)).BeginInit();
@@ -107,6 +109,7 @@
             this.webView21.AllowExternalDrop = true;
             this.webView21.CreationProperties = null;
             this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView21.Enabled = false;
             this.webView21.Location = new System.Drawing.Point(285, 163);
             this.webView21.Name = "webView21";
             this.webView21.Size = new System.Drawing.Size(668, 487);
@@ -136,6 +139,7 @@
             this.webView23.Size = new System.Drawing.Size(247, 487);
             this.webView23.TabIndex = 8;
             this.webView23.ZoomFactor = 1D;
+            this.webView23.Click += new System.EventHandler(this.webView23_Click);
             // 
             // addFriend
             // 
@@ -272,11 +276,33 @@
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
+            // roomIdLabel
+            // 
+            this.roomIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.roomIdLabel.Location = new System.Drawing.Point(12, 35);
+            this.roomIdLabel.Name = "roomIdLabel";
+            this.roomIdLabel.Size = new System.Drawing.Size(507, 27);
+            this.roomIdLabel.TabIndex = 22;
+            this.roomIdLabel.Text = "Room ID:";
+            this.roomIdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(12, 65);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(91, 27);
+            this.button12.TabIndex = 23;
+            this.button12.Text = "複製Room ID";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1432, 824);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.roomIdLabel);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.label2);
@@ -334,6 +360,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label roomIdLabel;
+        private System.Windows.Forms.Button button12;
     }
 }
 

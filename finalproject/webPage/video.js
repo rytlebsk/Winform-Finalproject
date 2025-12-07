@@ -49,6 +49,13 @@ ws.onReceive = (message) => {
             content: userInfo,
           });
           sendMessageToCSharp(payload);
+
+          // get room info
+          ws.send({
+            event: "get_room",
+            id: id,
+            room_id: roomId,
+          });
         }
       }
       break;
@@ -94,6 +101,13 @@ ws.onReceive = (message) => {
             content: userInfo,
           });
           sendMessageToCSharp(payload);
+
+          // get room info
+          ws.send({
+            event: "get_room",
+            id: id,
+            room_id: roomId,
+          });
         }
       }
       break;
@@ -109,6 +123,13 @@ ws.onReceive = (message) => {
             content: userInfo,
           });
           sendMessageToCSharp(payload);
+
+          // get room info
+          ws.send({
+            event: "get_room",
+            id: id,
+            room_id: roomId,
+          });
         }
       }
       break;
@@ -117,30 +138,73 @@ ws.onReceive = (message) => {
         updateRoom(message);
       }
       break;
+    case "get_user":
+      {
+        if (statusCode === 2000) {
+          const userData = message.user;
+          const payload = JSON.stringify({
+            action: "UPDATE_MEMBER_INFO",
+            content: userData,
+          });
+          sendMessageToCSharp(payload);
+        }
+      }
+      break;
+    case "get_room":
+      {
+        if (statusCode !== 2000) break;
+        updateRoom(message);
+      }
+      break;
   }
 };
 
 function updateRoom(data) {
-  if (data.status_code !== 2001) {
+  if (data.status_code !== 2001 && data.status_code !== 2000) {
     console.log(data.msg);
     return;
   }
   // update video list
   const videoList = data.room.video_queue;
-  const payload = JSON.stringify({
+  let payload = JSON.stringify({
     action: "UPDATE_VIDEO_LIST",
     content: videoList,
   });
   sendMessageToCSharp(payload);
 
-  // update members list
   const roomInfo = {
     room_id: data.room.id,
     members: data.room.members,
     video_playing: data.room.video_playing,
     video_queue: data.room.video_queue,
   };
-  const state = data.state;
+
+  const playerDiv = document.getElementById("player");
+  const defaultScreen = document.getElementById("default-screen");
+  if (roomInfo.video_queue.length === 0) {
+    if (player && player.stopVideo) {
+      player.stopVideo();
+    }
+    if (playerDiv) playerDiv.style.display = "none";
+    if (defaultScreen) defaultScreen.style.display = "flex";
+  } else if (roomInfo.video_queue.length > 0) {
+    if (playerDiv) playerDiv.style.display = "block";
+    if (defaultScreen) defaultScreen.style.display = "none";
+    const currentVideoInfo = getCurrentVideoInfo();
+    const currentVideoId = currentVideoInfo ? currentVideoInfo.video_id : null;
+    if (!currentVideoId) {
+      const nextVideo = roomInfo.video_queue[0];
+      if (nextVideo) {
+        if (roomInfo.video_playing) {
+          player.loadVideoById(extractYouTubeVideoId(nextVideo.url));
+        } else if (!roomInfo.video_playing) {
+          player.cueVideoById(extractYouTubeVideoId(nextVideo.url));
+        }
+      }
+    }
+  }
+
+  const state = data?.state;
 
   // video control
   if (state === "Play") {
@@ -157,10 +221,35 @@ function updateRoom(data) {
     if (player && player.loadVideoById) {
       const nextVideo = roomInfo.video_queue[0];
       if (nextVideo) {
-        player.loadVideoById(extractYouTubeVideoId(nextVideo.url));
+        if (roomInfo.video_playing) {
+          player.loadVideoById(extractYouTubeVideoId(nextVideo.url));
+        } else if (!roomInfo.video_playing) {
+          player.cueVideoById(extractYouTubeVideoId(nextVideo.url));
+        }
       }
     }
   }
+
+  //default state = join_room or leave_room
+  // update member list: clear and fetch again
+  payload = JSON.stringify({
+    action: "CLEAR_MEMBER_LIST",
+    content: null,
+  });
+  sendMessageToCSharp(payload);
+
+  const membersIDList = roomInfo.members;
+  updateMemberList(membersIDList);
+}
+
+function updateMemberList(members) {
+  members.forEach((member) => {
+    ws.send({
+      event: "get_user",
+      id: member,
+      room_id: "",
+    });
+  });
 }
 
 function sendMessageToCSharp(msg) {
@@ -181,23 +270,30 @@ function sendMessageToCSharp(msg) {
   }
 }
 
+function getCurrentVideoInfo() {
+  if (player && player.getVideoData) {
+    return player.getVideoData();
+  }
+  return null;
+}
+
 async function page_load() {
   const data = await fetchUserInfo();
   console.log(data);
 }
 
 async function fetchUserInfo() {
-  const response = await fetch("userInfo.json");
-  // if dont exist
-  if (!response.ok) {
-    data = {
-      id: "",
-      room_id: "",
-    };
-    return data;
+  try {
+    const response = await fetch("userInfo.json");
+
+    if (!response.ok) {
+      return { id: "", room_id: "" };
+    }
+
+    return await response.json();
+  } catch (e) {
+    return { id: "", room_id: "" };
   }
-  const data = await response.json();
-  return data;
 }
 
 function extractYouTubeVideoId(url) {
@@ -371,7 +467,6 @@ async function login() {
 
 window.joinRoom = async function (newRoomId) {
   const userInfo = await fetchUserInfo();
-  alert("Joining room: " + newRoomId + " with user ID: " + userInfo.id);
   ws.send({
     event: "join_room",
     id: userInfo.id,

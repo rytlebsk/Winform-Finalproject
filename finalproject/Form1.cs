@@ -39,7 +39,6 @@ namespace finalproject
             listener.Prefixes.Add("http://localhost:8964/");
             listener.Start();
 
-            var content = new FileStream("videoQueue.html", FileMode.Open, FileAccess.Read);
             Task.Run(() =>
             {
                 while (true)
@@ -47,6 +46,9 @@ namespace finalproject
                     var context = listener.GetContext();
                     var request = context.Request;
                     var response = context.Response;
+
+                    string reqPath = request.Url.AbsolutePath;
+                    Console.WriteLine($"[Request] {request.HttpMethod} {reqPath}");
 
                     string defaultFile = "videoQueue.html";
                     if (request.LocalEndPoint.Port == 8000)
@@ -146,6 +148,12 @@ namespace finalproject
         {
             webView21.ExecuteScriptAsync("leaveRoom()");
         }
+        private void button12_Click(object sender, EventArgs e)
+        {
+            string roomId = roomIdLabel.Text.Replace("Room ID: ", "");
+            Clipboard.SetText(roomId);
+            MessageBox.Show("Room ID copied to clipboard!");
+        }
 
         private void webView21_Click(object sender, EventArgs e)
         {
@@ -225,6 +233,8 @@ namespace finalproject
                     File.WriteAllText(path, contentToSave);
 
                     Console.WriteLine("save success！");
+
+                    roomIdLabel.Text = "Room ID: " + root.GetProperty("content").GetProperty("room_id").GetString();
                 }
                 else if(root.TryGetProperty("action", out JsonElement actionEl1) && actionEl1.GetString() == "UPDATE_VIDEO_LIST")
                 {
@@ -241,8 +251,20 @@ namespace finalproject
                 {
                     MessageBox.Show("You are already in this room.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
+                if (root.TryGetProperty("action", out JsonElement actionEl4) && actionEl4.GetString() == "UPDATE_MEMBER_INFO")
+                {
+                    string content = root.GetProperty("content").ToString();
+                    webView23.ExecuteScriptAsync($"updateMemberInfo({content})");
 
+                    Console.WriteLine("member info updated！");
+                }
+                if (root.TryGetProperty("action", out JsonElement actionEl5) && actionEl5.GetString() == "CLEAR_MEMBER_LIST")
+                {
+                    webView23.ExecuteScriptAsync($"clearMemberList()");
+
+                    Console.WriteLine("member List cleared！");
+                }
+            }
         }
 
 
@@ -489,6 +511,12 @@ namespace finalproject
             this.webView21.ExecuteScriptAsync($"joinRoom('{room_id}')");
         }
 
+        private void webView23_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 
     public class SocketMessages

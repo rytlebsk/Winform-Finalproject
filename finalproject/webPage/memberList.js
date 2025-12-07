@@ -18,20 +18,11 @@ ws.onReceive = (message) => {
   // handle received messages
 };
 
+const memberList = [];
+
 function refreshMemberList() {
   const container = document.querySelector(".member-list-container");
-  //container.innerHTML = ""; // clear existing list
-  const memberList = [
-    {
-      name: "member_1",
-      avatarUrl: "picture-lake.jpg",
-    },
-    {
-      name: "member_2",
-      avatarUrl: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-    },
-  ]; // get from server response
-  ws.send({});
+  container.innerHTML = ""; // clear existing list
   memberList.forEach((member) => {
     addMemberItem(container, member);
   });
@@ -45,10 +36,10 @@ function addMemberItem(container, member) {
           <img
             class="member-avatar-img"
             src="${member.avatarUrl}"
-            alt="Member 1 avatar"
+            alt="Member ${member.numeric_id} avatar"
           />
         </picture>
-        <h2 class="member-name">${member.name}</h2>
+        <h2 class="member-name">${member.username}  #${member.numeric_id}</h2>
       </div>
       `;
   container.appendChild(memberItem);
@@ -56,3 +47,14 @@ function addMemberItem(container, member) {
 
 // define globally for HTML to access because of script type="module"
 window.refreshMemberList = refreshMemberList;
+
+// C# message handler
+window.updateMemberInfo = (memberInfo) => {
+  memberList.push(memberInfo);
+  refreshMemberList();
+};
+
+window.clearMemberList = () => {
+  memberList.length = 0;
+  refreshMemberList();
+};
