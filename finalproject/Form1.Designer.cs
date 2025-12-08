@@ -51,6 +51,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.roomIdLabel = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
+            this.userNameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView23)).BeginInit();
@@ -279,7 +280,7 @@
             // roomIdLabel
             // 
             this.roomIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.roomIdLabel.Location = new System.Drawing.Point(12, 35);
+            this.roomIdLabel.Location = new System.Drawing.Point(12, 54);
             this.roomIdLabel.Name = "roomIdLabel";
             this.roomIdLabel.Size = new System.Drawing.Size(507, 27);
             this.roomIdLabel.TabIndex = 22;
@@ -288,7 +289,7 @@
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(12, 65);
+            this.button12.Location = new System.Drawing.Point(13, 84);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(91, 27);
             this.button12.TabIndex = 23;
@@ -296,11 +297,22 @@
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
+            // userNameLabel
+            // 
+            this.userNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userNameLabel.Location = new System.Drawing.Point(12, 19);
+            this.userNameLabel.Name = "userNameLabel";
+            this.userNameLabel.Size = new System.Drawing.Size(307, 23);
+            this.userNameLabel.TabIndex = 24;
+            this.userNameLabel.Text = "User:";
+            this.userNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1432, 824);
+            this.Controls.Add(this.userNameLabel);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.roomIdLabel);
             this.Controls.Add(this.button11);
@@ -362,6 +374,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label roomIdLabel;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Label userNameLabel;
     }
 }
 

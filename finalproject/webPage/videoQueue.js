@@ -1,17 +1,5 @@
 import { wSocket } from "./myWS.js";
 
-const ws = new wSocket("ws://localhost:3000/");
-
-ws.connectHandshake = () => {
-  //fetch video queue after login
-  fetchVideoQueue();
-};
-
-ws.onReceive = (message) => {
-  console.log("Received video queue message:", message);
-  // Handle the received video queue message here
-};
-
 //Interface for video queue data
 class VideoQueueItem {
   constructor(avatarUrl, title, url) {
@@ -21,15 +9,7 @@ class VideoQueueItem {
   }
 }
 
-// receive handler
-ws.onReceive = (message) => {
-  console.log("Received video queue message:", message);
-  // Handle the received video queue message here
-};
-
 function fetchVideoQueue() {
-  ws.send({ action: "getVideoQueue" });
-  // Simulated video queue data; replace with server response
   const videoQueue = [];
   refreshVideoQueue(videoQueue);
 }

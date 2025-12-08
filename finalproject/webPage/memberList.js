@@ -1,23 +1,5 @@
 import { wSocket } from "./myWS.js";
 
-const ws = new wSocket("ws://localhost:3000");
-
-ws.connectHandshake = () => {
-  // login
-  const userId = ""; // get from client json
-  const roomId = ""; // somehow
-
-  //getCurrentRoom member list by roomId
-  /*
-    ws.send({
-    });
-    */
-};
-
-ws.onReceive = (message) => {
-  // handle received messages
-};
-
 const memberList = [];
 
 function refreshMemberList() {

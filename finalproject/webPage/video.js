@@ -1,6 +1,8 @@
 import { wSocket } from "./myWS.js";
 
-const ws = new wSocket("ws://localhost:3000/");
+const ws = new wSocket(
+  "wss://two025winform-finalproject-backend.onrender.com/"
+);
 
 const OperationMethod = {
   ADD: "Add",
@@ -34,9 +36,24 @@ ws.onReceive = (message) => {
   switch (event) {
     case "login":
       {
-        if (statusCode === 4003) {
-          // logout and login again
-          alert("User already logged in elsewhere. Logging out first.");
+        if (statusCode === 4003 || statusCode === 4004) {
+          // clear id and room_id on login failure
+          const userInfo = {
+            id: "",
+            room_id: "",
+          };
+          const payload = JSON.stringify({
+            action: "SAVE_FILE",
+            content: userInfo,
+          });
+          sendMessageToCSharp(payload);
+
+          // and login again to get a new id and room_id
+          ws.send({
+            event: "login",
+            id: "",
+            room_id: "",
+          });
         }
         if (statusCode === 2000) {
           // sent login data to C#
