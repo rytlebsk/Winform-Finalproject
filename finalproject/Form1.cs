@@ -212,6 +212,11 @@ namespace finalproject
             findvideo findvideo = new findvideo();
             findvideo.ShowDialog();
         }
+        private void button13_Click(object sender, EventArgs e)
+        {
+            Form3 settingsForm = new Form3(this);
+            settingsForm.ShowDialog();
+        }
 
         public void WebView21_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
         {
@@ -260,7 +265,7 @@ namespace finalproject
                     LoginMessage userInfo = readUserInfo();
                     if (userInfo.id == root.GetProperty("content").GetProperty("id").ToString())
                     {
-                        userNameLabel.Text = "User: " + root.GetProperty("content").GetProperty("username").ToString() + "\t#"
+                        userNameLabel.Text = "User: " + root.GetProperty("content").GetProperty("username").ToString() + "#"
                             + root.GetProperty("content").GetProperty("numeric_id").ToString();
                     }
                 }
@@ -503,8 +508,44 @@ namespace finalproject
         {
 
         }
+        public userInfo GetUserInfo()
+        {
+            userInfo user = new userInfo();
 
-        
+            string rawText = userNameLabel.Text;
+
+            if (!string.IsNullOrEmpty(rawText) && rawText.Contains("#"))
+            {
+                try
+                {
+                    string cleanText = rawText.Replace("User: ", "");
+
+                    string[] parts = cleanText.Split('#');
+
+                    if (parts.Length >= 2)
+                    {
+                        user.userName = parts[0].Trim();
+                        user.userNumericId = parts[1].Trim();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error parsing user info: " + ex.Message);
+                }
+            }
+            return user;
+        }
+
+        public async void SendUserDataToWeb(string json)
+        {
+            if (webView21.CoreWebView2 != null)
+            {
+                await webView21.ExecuteScriptAsync($"changeUserDetails({json})");
+
+                Console.WriteLine("已傳送 JSON 到 WebView");
+            }
+        }
+
     }
 
     public class SocketMessages
@@ -521,5 +562,11 @@ namespace finalproject
         public string roomId { get; set; }
         [JsonPropertyName("msg")]
         public string message { get; set; }
+    }
+
+    public class userInfo
+    {
+        public string userName = "";
+        public string userNumericId = "";
     }
 }

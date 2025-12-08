@@ -519,3 +519,9 @@ window.changeToNextVideo = async function () {
     room_id: userInfo.room_id,
   });
 };
+
+window.changeUserDetails = async function (userDetail) {
+  ws.send({
+    // something
+  });
+};

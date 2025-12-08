@@ -52,6 +52,7 @@
             this.roomIdLabel = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
             this.userNameLabel = new System.Windows.Forms.Label();
+            this.button13 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView22)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.webView23)).BeginInit();
@@ -307,11 +308,23 @@
             this.userNameLabel.Text = "User:";
             this.userNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // button13
+            // 
+            this.button13.Font = new System.Drawing.Font("Microsoft JhengHei UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button13.Location = new System.Drawing.Point(1268, 12);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(152, 68);
+            this.button13.TabIndex = 25;
+            this.button13.Text = "修改用戶資料";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1432, 824);
+            this.Controls.Add(this.button13);
             this.Controls.Add(this.userNameLabel);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.roomIdLabel);
@@ -375,6 +388,7 @@
         private System.Windows.Forms.Label roomIdLabel;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label userNameLabel;
+        private System.Windows.Forms.Button button13;
     }
 }
 
