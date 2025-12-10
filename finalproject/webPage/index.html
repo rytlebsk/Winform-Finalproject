@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <script src="test.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>Document</title>
+  </head>
+  <body onload="page_on_load()" style="margin: 0">
+    <div class="homePage-container">
+      <div class="login-container">
+        <div class="login-icon-box">
+          <button onclick="openLoginMenu()" class="login-button">
+            <picture>
+              <img
+                src="login-icon.png"
+                alt="login-icon"
+                class="login-icon-img"
+              />
+            </picture>
+          </button>
+        </div>
+      </div>
+      <div class="title-box">
+        <h1>Welcome to Watch Together</h1>
+        <h2>Please log in to continue</h2>
+      </div>
+      <div class="login-menu-container" id="login-menu">
+        <div class="login-menu-box" id="login-menu-box-id">
+          <h3 id="login-menu-title">Login Menu</h3>
+          <div class="login-input-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="login-input"
+            />
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="login-input"
+            />
+          </div>
+          <br />
+          <div>
+            <a href="#" id="register-link" onclick="openRegisterPage()"
+              >Don't have an account? Register here.</a
+            >
+          </div>
+          <div id="login-menu-button-group">
+            <button onclick="submitLogin()">Submit</button>
+            <button onclick="closeLoginMenu()">Close</button>
+          </div>
+        </div>
+      </div>
+      <div class="register-menu-container" id="register-menu">
+        <div class="register-menu-box" id="register-menu-box-id">
+          <h3 id="register-menu-title">Register Menu</h3>
+          <div class="register-input-group">
+            <label for="new-username">Username:</label>
+            <input
+              type="text"
+              id="new-username"
+              name="new-username"
+              class="login-input"
+            />
+            <label for="new-password">Password:</label>
+            <input
+              type="password"
+              id="new-password"
+              name="new-password"
+              class="login-input"
+            />
+
+            <label for="confirm-password">Confirm Password:</label>
+            <input
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              class="login-input"
+            />
+          </div>
+          <br />
+          <div id="register-menu-button-group">
+            <button onclick="submitRegister()">Submit</button>
+            <button onclick="closeRegisterMenu()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button onclick="navigateVideoPage()">navigate Video page</button>
+    <div id="video-container"></div>
+    <div id="message"></div>
+  </body>
+</html>

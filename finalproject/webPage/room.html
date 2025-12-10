@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="room.css" />
+    <script src="room.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>Room Page</title>
+  </head>
+  <body onload="room_page_on_load()" style="margin: 0">
+    <div class="room-container">
+      <div class="room-nav-bar-container">
+        <div class="room-nav-bar">
+          <div class="room-nav-bar-left-section">
+            <p>Room Name:XXX</p>
+            <p>Room ID:XXXXX</p>
+            <p>Total member: 0</p>
+          </div>
+          <div class="room-nav-bar-right-section">
+            <button onclick="openInviteModal()" class="invite-button">
+              Invite
+            </button>
+            <button onclick="leaveRoom()" class="leave-room-button">
+              Leave Room
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="video-player-container">
+        <iframe
+          src="https://www.youtube.com/embed/Y0SWx_n_AeQ?si=I5Tkd-X4OEzMtqGd"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="video-list-container">
+        <div class="video-list-box-container">
+          <div class="video-list-header-box">
+            <h2>Video List</h2>
+          </div>
+          <div class="video-list-item-box">
+            <div class="video-list-item">
+              <picture class="video-preview-picture">
+                <img
+                  src="picture-lake.jpg"
+                  alt="lake"
+                  class="video-preview-img"
+                />
+              </picture>
+              <div class="video-info">
+                <div class="video-title">
+                  <p class="video-title-text">title</p>
+                </div>
+                <div class="video-discription">
+                  <p class="video-discription-text">discription</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
