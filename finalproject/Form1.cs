@@ -231,7 +231,7 @@ namespace finalproject
                 if (root.TryGetProperty("action", out JsonElement actionEl) && actionEl.GetString() == "SAVE_FILE")
                 {
                     // 取得要存的內容
-                    string contentToSave = root.GetProperty("content").ToString(); // 轉回 JSON 字串
+                    string contentToSave = root.GetProperty("content").ToString();
 
                     // 寫入檔案
                     string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "userInfo.json");
@@ -542,7 +542,6 @@ namespace finalproject
             {
                 await webView21.ExecuteScriptAsync($"changeUserDetails({json})");
 
-                Console.WriteLine("已傳送 JSON 到 WebView");
             }
         }
 

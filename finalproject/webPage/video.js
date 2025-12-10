@@ -173,6 +173,13 @@ ws.onReceive = (message) => {
         updateRoom(message);
       }
       break;
+    case "change_user_data":
+      {
+        if (statusCode === 2000) {
+          // get updated user info
+        }
+      }
+      break;
   }
 };
 
@@ -521,7 +528,29 @@ window.changeToNextVideo = async function () {
 };
 
 window.changeUserDetails = async function (userDetail) {
+  const userInfo = await fetchUserInfo();
+  const newUserName = userDetail.userName;
+  const newUserNumericId = userDetail.userNumericId;
+  const newUserAvatar = userDetail.userProfileImage;
+  // change user name first
   ws.send({
-    // something
+    event: "change_user_data",
+    element_name: "username",
+    value: newUserName,
+    id: userInfo.id,
+  });
+
+  ws.send({
+    event: "change_user_data",
+    element_name: "numeric_id",
+    value: newUserNumericId,
+    id: userInfo.id,
+  });
+
+  ws.send({
+    event: "change_user_data",
+    element_name: "avatar",
+    value: newUserAvatar,
+    id: userInfo.id,
   });
 };

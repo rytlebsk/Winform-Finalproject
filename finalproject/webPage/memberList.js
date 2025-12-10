@@ -1,5 +1,3 @@
-import { wSocket } from "./myWS.js";
-
 const memberList = [];
 
 function refreshMemberList() {
@@ -13,11 +11,16 @@ function refreshMemberList() {
 function addMemberItem(container, member) {
   const memberItem = document.createElement("div");
   memberItem.className = "member-list-box";
+
+  let finalSrc = member.avatar_url || "assets/default_avatar.png";
+  const timestamp = new Date().getTime();
+  finalSrc += `?t=${timestamp}`;
+
   memberItem.innerHTML = `
     <picture class="member-avatar">
           <img
             class="member-avatar-img"
-            src="${member.avatarUrl}"
+            src="${finalSrc}"
             alt="Member ${member.numeric_id} avatar"
           />
         </picture>

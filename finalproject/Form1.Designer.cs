@@ -111,7 +111,6 @@
             this.webView21.AllowExternalDrop = true;
             this.webView21.CreationProperties = null;
             this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView21.Enabled = false;
             this.webView21.Location = new System.Drawing.Point(285, 163);
             this.webView21.Name = "webView21";
             this.webView21.Size = new System.Drawing.Size(668, 487);
