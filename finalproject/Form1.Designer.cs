@@ -36,10 +36,7 @@
             this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.webView23 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            this.addFriend = new System.Windows.Forms.Button();
-            this.friendlist = new System.Windows.Forms.Button();
             this.joinroom = new System.Windows.Forms.Button();
-            this.findvideo = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -142,28 +139,6 @@
             this.webView23.ZoomFactor = 1D;
             this.webView23.Click += new System.EventHandler(this.webView23_Click);
             // 
-            // addFriend
-            // 
-            this.addFriend.Location = new System.Drawing.Point(804, 68);
-            this.addFriend.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.addFriend.Name = "addFriend";
-            this.addFriend.Size = new System.Drawing.Size(88, 58);
-            this.addFriend.TabIndex = 9;
-            this.addFriend.Text = "添加好友";
-            this.addFriend.UseVisualStyleBackColor = true;
-            this.addFriend.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // friendlist
-            // 
-            this.friendlist.Location = new System.Drawing.Point(897, 68);
-            this.friendlist.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.friendlist.Name = "friendlist";
-            this.friendlist.Size = new System.Drawing.Size(88, 58);
-            this.friendlist.TabIndex = 10;
-            this.friendlist.Text = "好友清單";
-            this.friendlist.UseVisualStyleBackColor = true;
-            this.friendlist.Click += new System.EventHandler(this.friendlist_Click);
-            // 
             // joinroom
             // 
             this.joinroom.Location = new System.Drawing.Point(990, 68);
@@ -174,17 +149,6 @@
             this.joinroom.Text = "加入房間";
             this.joinroom.UseVisualStyleBackColor = true;
             this.joinroom.Click += new System.EventHandler(this.joinroom_Click);
-            // 
-            // findvideo
-            // 
-            this.findvideo.Location = new System.Drawing.Point(1083, 68);
-            this.findvideo.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.findvideo.Name = "findvideo";
-            this.findvideo.Size = new System.Drawing.Size(88, 58);
-            this.findvideo.TabIndex = 12;
-            this.findvideo.Text = "搜尋影片";
-            this.findvideo.UseVisualStyleBackColor = true;
-            this.findvideo.Click += new System.EventHandler(this.findvideo_Click);
             // 
             // button4
             // 
@@ -268,7 +232,7 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(1175, 68);
+            this.button11.Location = new System.Drawing.Point(1093, 68);
             this.button11.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(88, 58);
@@ -336,10 +300,7 @@
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.findvideo);
             this.Controls.Add(this.joinroom);
-            this.Controls.Add(this.friendlist);
-            this.Controls.Add(this.addFriend);
             this.Controls.Add(this.webView23);
             this.Controls.Add(this.webView22);
             this.Controls.Add(this.button3);
@@ -371,10 +332,7 @@
         private System.Windows.Forms.Button button3;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView22;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView23;
-        private System.Windows.Forms.Button addFriend;
-        private System.Windows.Forms.Button friendlist;
         private System.Windows.Forms.Button joinroom;
-        private System.Windows.Forms.Button findvideo;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
