@@ -57,7 +57,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(394, 96);
+            this.textBox1.Location = new System.Drawing.Point(406, 94);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(259, 22);
             this.textBox1.TabIndex = 1;
@@ -67,9 +67,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(357, 99);
+            this.label1.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label1.Location = new System.Drawing.Point(357, 95);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 12);
+            this.label1.Size = new System.Drawing.Size(31, 21);
             this.label1.TabIndex = 2;
             this.label1.Text = "ID:";
             // 
@@ -145,7 +146,7 @@
             // joinroom
             // 
             this.joinroom.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.joinroom.Location = new System.Drawing.Point(990, 68);
+            this.joinroom.Location = new System.Drawing.Point(1018, 70);
             this.joinroom.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.joinroom.Name = "joinroom";
             this.joinroom.Size = new System.Drawing.Size(88, 54);
@@ -190,9 +191,9 @@
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button7.Location = new System.Drawing.Point(1050, 648);
+            this.button7.Location = new System.Drawing.Point(1174, 699);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(88, 45);
+            this.button7.Size = new System.Drawing.Size(90, 45);
             this.button7.TabIndex = 16;
             this.button7.Text = "+10%";
             this.button7.UseVisualStyleBackColor = true;
@@ -201,7 +202,7 @@
             // button8
             // 
             this.button8.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button8.Location = new System.Drawing.Point(1164, 648);
+            this.button8.Location = new System.Drawing.Point(1174, 750);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(90, 45);
             this.button8.TabIndex = 17;
@@ -212,7 +213,7 @@
             // button9
             // 
             this.button9.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button9.Location = new System.Drawing.Point(1284, 648);
+            this.button9.Location = new System.Drawing.Point(1109, 648);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(90, 45);
             this.button9.TabIndex = 18;
@@ -233,7 +234,7 @@
             // button10
             // 
             this.button10.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button10.Location = new System.Drawing.Point(1284, 704);
+            this.button10.Location = new System.Drawing.Point(1233, 648);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(90, 45);
             this.button10.TabIndex = 20;
@@ -244,7 +245,7 @@
             // button11
             // 
             this.button11.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button11.Location = new System.Drawing.Point(1093, 68);
+            this.button11.Location = new System.Drawing.Point(1121, 70);
             this.button11.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(88, 54);
