@@ -57,9 +57,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(394, 104);
+            this.textBox1.Location = new System.Drawing.Point(394, 96);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(259, 20);
+            this.textBox1.Size = new System.Drawing.Size(259, 22);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
@@ -67,17 +67,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(357, 107);
+            this.label1.Location = new System.Drawing.Point(357, 99);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(21, 13);
+            this.label1.Size = new System.Drawing.Size(20, 12);
             this.label1.TabIndex = 2;
             this.label1.Text = "ID:";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(245, 685);
+            this.button1.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button1.Location = new System.Drawing.Point(276, 628);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(162, 92);
+            this.button1.Size = new System.Drawing.Size(162, 85);
             this.button1.TabIndex = 3;
             this.button1.Text = "play";
             this.button1.UseVisualStyleBackColor = true;
@@ -85,9 +86,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(513, 685);
+            this.button2.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button2.Location = new System.Drawing.Point(544, 628);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(162, 92);
+            this.button2.Size = new System.Drawing.Size(162, 85);
             this.button2.TabIndex = 4;
             this.button2.Text = "pause";
             this.button2.UseVisualStyleBackColor = true;
@@ -95,9 +97,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(782, 685);
+            this.button3.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button3.Location = new System.Drawing.Point(813, 628);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(162, 92);
+            this.button3.Size = new System.Drawing.Size(162, 85);
             this.button3.TabIndex = 5;
             this.button3.Text = "next";
             this.button3.UseVisualStyleBackColor = true;
@@ -108,9 +111,9 @@
             this.webView21.AllowExternalDrop = true;
             this.webView21.CreationProperties = null;
             this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView21.Location = new System.Drawing.Point(285, 163);
+            this.webView21.Location = new System.Drawing.Point(285, 150);
             this.webView21.Name = "webView21";
-            this.webView21.Size = new System.Drawing.Size(668, 487);
+            this.webView21.Size = new System.Drawing.Size(668, 450);
             this.webView21.TabIndex = 0;
             this.webView21.ZoomFactor = 1D;
             this.webView21.Click += new System.EventHandler(this.webView21_Click);
@@ -120,9 +123,9 @@
             this.webView22.AllowExternalDrop = true;
             this.webView22.CreationProperties = null;
             this.webView22.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView22.Location = new System.Drawing.Point(969, 163);
+            this.webView22.Location = new System.Drawing.Point(969, 150);
             this.webView22.Name = "webView22";
-            this.webView22.Size = new System.Drawing.Size(436, 487);
+            this.webView22.Size = new System.Drawing.Size(436, 450);
             this.webView22.TabIndex = 7;
             this.webView22.ZoomFactor = 1D;
             this.webView22.Click += new System.EventHandler(this.webView22_Click);
@@ -132,19 +135,20 @@
             this.webView23.AllowExternalDrop = true;
             this.webView23.CreationProperties = null;
             this.webView23.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webView23.Location = new System.Drawing.Point(13, 163);
+            this.webView23.Location = new System.Drawing.Point(13, 150);
             this.webView23.Name = "webView23";
-            this.webView23.Size = new System.Drawing.Size(247, 487);
+            this.webView23.Size = new System.Drawing.Size(247, 450);
             this.webView23.TabIndex = 8;
             this.webView23.ZoomFactor = 1D;
             this.webView23.Click += new System.EventHandler(this.webView23_Click);
             // 
             // joinroom
             // 
+            this.joinroom.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.joinroom.Location = new System.Drawing.Point(990, 68);
             this.joinroom.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.joinroom.Name = "joinroom";
-            this.joinroom.Size = new System.Drawing.Size(88, 58);
+            this.joinroom.Size = new System.Drawing.Size(88, 54);
             this.joinroom.TabIndex = 11;
             this.joinroom.Text = "加入房間";
             this.joinroom.UseVisualStyleBackColor = true;
@@ -152,9 +156,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(437, 702);
+            this.button4.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button4.Location = new System.Drawing.Point(468, 644);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(56, 59);
+            this.button4.Size = new System.Drawing.Size(60, 60);
             this.button4.TabIndex = 13;
             this.button4.Text = "-10s";
             this.button4.UseVisualStyleBackColor = true;
@@ -162,9 +167,10 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(702, 702);
+            this.button5.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button5.Location = new System.Drawing.Point(733, 644);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(56, 59);
+            this.button5.Size = new System.Drawing.Size(60, 60);
             this.button5.TabIndex = 14;
             this.button5.Text = "+10s";
             this.button5.UseVisualStyleBackColor = true;
@@ -172,9 +178,10 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(680, 93);
+            this.button6.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button6.Location = new System.Drawing.Point(680, 86);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(94, 41);
+            this.button6.Size = new System.Drawing.Size(94, 38);
             this.button6.TabIndex = 15;
             this.button6.Text = "加入影片";
             this.button6.UseVisualStyleBackColor = true;
@@ -182,9 +189,10 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(1050, 702);
+            this.button7.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button7.Location = new System.Drawing.Point(1050, 648);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(88, 49);
+            this.button7.Size = new System.Drawing.Size(88, 45);
             this.button7.TabIndex = 16;
             this.button7.Text = "+10%";
             this.button7.UseVisualStyleBackColor = true;
@@ -192,9 +200,10 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(1164, 702);
+            this.button8.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button8.Location = new System.Drawing.Point(1164, 648);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(90, 49);
+            this.button8.Size = new System.Drawing.Size(90, 45);
             this.button8.TabIndex = 17;
             this.button8.Text = "-10%";
             this.button8.UseVisualStyleBackColor = true;
@@ -202,9 +211,10 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(1284, 702);
+            this.button9.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button9.Location = new System.Drawing.Point(1284, 648);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(90, 49);
+            this.button9.Size = new System.Drawing.Size(90, 45);
             this.button9.TabIndex = 18;
             this.button9.Text = "mute";
             this.button9.UseVisualStyleBackColor = true;
@@ -213,18 +223,19 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1079, 664);
+            this.label2.Location = new System.Drawing.Point(1079, 613);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(274, 24);
+            this.label2.Size = new System.Drawing.Size(274, 22);
             this.label2.TabIndex = 19;
             this.label2.Text = "Volume Control(Client side)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(1284, 763);
+            this.button10.Font = new System.Drawing.Font("Microsoft JhengHei", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button10.Location = new System.Drawing.Point(1284, 704);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(90, 49);
+            this.button10.Size = new System.Drawing.Size(90, 45);
             this.button10.TabIndex = 20;
             this.button10.Text = "unmute";
             this.button10.UseVisualStyleBackColor = true;
@@ -232,10 +243,11 @@
             // 
             // button11
             // 
+            this.button11.Font = new System.Drawing.Font("Microsoft JhengHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.button11.Location = new System.Drawing.Point(1093, 68);
             this.button11.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(88, 58);
+            this.button11.Size = new System.Drawing.Size(88, 54);
             this.button11.TabIndex = 21;
             this.button11.Text = "離開房間";
             this.button11.UseVisualStyleBackColor = true;
@@ -244,18 +256,18 @@
             // roomIdLabel
             // 
             this.roomIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.roomIdLabel.Location = new System.Drawing.Point(12, 54);
+            this.roomIdLabel.Location = new System.Drawing.Point(12, 50);
             this.roomIdLabel.Name = "roomIdLabel";
-            this.roomIdLabel.Size = new System.Drawing.Size(507, 27);
+            this.roomIdLabel.Size = new System.Drawing.Size(507, 25);
             this.roomIdLabel.TabIndex = 22;
             this.roomIdLabel.Text = "Room ID:";
             this.roomIdLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(13, 84);
+            this.button12.Location = new System.Drawing.Point(13, 78);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(91, 27);
+            this.button12.Size = new System.Drawing.Size(91, 25);
             this.button12.TabIndex = 23;
             this.button12.Text = "複製Room ID";
             this.button12.UseVisualStyleBackColor = true;
@@ -264,9 +276,9 @@
             // userNameLabel
             // 
             this.userNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userNameLabel.Location = new System.Drawing.Point(12, 19);
+            this.userNameLabel.Location = new System.Drawing.Point(12, 18);
             this.userNameLabel.Name = "userNameLabel";
-            this.userNameLabel.Size = new System.Drawing.Size(307, 23);
+            this.userNameLabel.Size = new System.Drawing.Size(307, 21);
             this.userNameLabel.TabIndex = 24;
             this.userNameLabel.Text = "User:";
             this.userNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -284,7 +296,7 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1432, 824);
             this.Controls.Add(this.button13);
